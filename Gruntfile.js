@@ -8,12 +8,13 @@
 // 'test/spec/**/*.js'
 
 module.exports = function (grunt) {
-
-  // Load grunt tasks automatically
-  require('load-grunt-tasks')(grunt);
-
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
+
+  // SLOW!
+  // Load grunt tasks automatically
+  // require('load-grunt-tasks')(grunt);
+
 
   // Define the configuration for all the tasks
   grunt.initConfig({
@@ -25,8 +26,26 @@ module.exports = function (grunt) {
       dist: 'dist'
     },
 
+    jade: {
+      dist: {
+        options: {
+          pretty: true
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>',
+          dest: '.tmp',
+          src: '{,*/}*.jade',
+          ext: '.html'
+        }]
+      }
+    },
     // Watches files for changes and runs tasks based on the changed files
     watch: {
+      jade: {
+        files: ['<%= yeoman.app %>/{,*/}*.jade'],
+        tasks: ['jade']
+      },
       js: {
         files: ['{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js'],
         tasks: ['newer:jshint:all']
@@ -51,6 +70,7 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
+          '.tmp/{,*}*.html',
           '<%= yeoman.app %>/{,*/}*.html',
           '.tmp/styles/{,*/}*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
@@ -189,7 +209,7 @@ module.exports = function (grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      html: '<%= yeoman.app %>/index.html',
+      html: '.tmp/index.html',
       options: {
         dest: '<%= yeoman.dist %>'
       }
@@ -239,8 +259,8 @@ module.exports = function (grunt) {
         },
         files: [{
           expand: true,
-          cwd: '<%= yeoman.app %>',
-          src: ['*.html', 'views/*.html'],
+          cwd: '.tmp',
+          src: ['{,*}*.html'],
           dest: '<%= yeoman.dist %>'
         }]
       }
@@ -301,6 +321,7 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
+        'jade',
         'compass:server',
         'copy:styles'
       ],
@@ -353,51 +374,91 @@ module.exports = function (grunt) {
   });
 
 
-  grunt.registerTask('serve', function (target) {
+  grunt.registerTask('serve', [], function (target) {
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-copy'); // concurrent
+    grunt.loadNpmTasks('grunt-contrib-compass'); // concurrent
+    grunt.loadNpmTasks('grunt-autoprefixer');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+
     if (target === 'dist') {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
     }
 
     grunt.task.run([
       'clean:server',
-      'concurrent:server',
+      'jade',
+      'compass:server',
+      'copy:styles',
       'autoprefixer',
       'connect:livereload',
       'watch'
     ]);
   });
 
-  grunt.registerTask('server', function () {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve']);
+  grunt.registerTask('test', [], function() {
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-compass'); // concurrent
+    grunt.loadNpmTasks('grunt-contrib-copy'); // concurrent
+    grunt.loadNpmTasks('grunt-autoprefixer');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-karma');
+    grunt.task.run(
+      'clean:server',
+      'compass',
+      'copy:styles',
+      'autoprefixer',
+      'connect:test',
+      'karma'
+    );
   });
 
-  grunt.registerTask('test', [
-    'clean:server',
-    'concurrent:test',
-    'autoprefixer',
-    'connect:test',
-    'karma'
-  ]);
+  grunt.registerTask('jade', [], function() {
+    grunt.loadNpmTasks('grunt-contrib-jade');
+  });
 
-  grunt.registerTask('build', [
-    'clean:dist',
-    'useminPrepare',
-    'concurrent:dist',
-    'autoprefixer',
-    'concat',
-    'ngmin',
-    'copy:dist',
-    'cdnify',
-    'cssmin',
-    'uglify',
-    'rev',
-    'usemin'
-  ]);
+  grunt.registerTask('build', [], function() {
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-usemin');
+    grunt.loadNpmTasks('grunt-contrib-compass'); // concurrent
+    grunt.loadNpmTasks('grunt-contrib-copy'); // concurrent
+    grunt.loadNpmTasks('grunt-contrib-imagemin'); // concurrent
+    grunt.loadNpmTasks('grunt-contrib-htmlmin'); // concurrent
+    grunt.loadNpmTasks('grunt-svgmin'); // concurrent
+    grunt.loadNpmTasks('grunt-autoprefixer');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-ngmin');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-google-cdn');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-rev');
+    grunt.loadNpmTasks('grunt-usemin');
+    grunt.task.run([
+      'clean:dist',
+      'jade',
+      'useminPrepare',
+      'compass:dist',
+      'copy:styles',
+      'imagemin',
+      'svgmin',
+      'htmlmin',
+      'autoprefixer',
+      'concat',
+      'ngmin',
+      'copy:dist',
+      'cdnify',
+      'cssmin',
+      'uglify',
+      'rev',
+      'usemin'
+    ]);
+  });
 
-  grunt.registerTask('default', [
-    'newer:jshint',
-    'test',
-    'build'
-  ]);
+  grunt.registerTask('default', [], function() {
+    grunt.loadNpmTasks('grunt-newer');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.task.run('newer:jshint', 'test', 'build');
+  });
 };

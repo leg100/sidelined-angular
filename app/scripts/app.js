@@ -2,7 +2,7 @@
 
 angular.module('sidelinedApp', ['ui.router'])
   .config(function ($locationProvider, $stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/");
+    $urlRouterProvider.otherwise('/');
     $stateProvider
       .state('root', {
         templateUrl: 'views/main.html',
