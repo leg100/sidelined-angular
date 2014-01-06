@@ -44,7 +44,7 @@
       .col-xs-12
         h4 Revisions
         .row(ng-repeat="revision in injury.revisions")
-          ng-include(src="revision_templates[revision.action]")
+          ng-include(src="revisionTemplates[revision.action]")
     .row
       .col-xs-12
         pre

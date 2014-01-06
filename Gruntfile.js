@@ -11,25 +11,25 @@ module.exports = function (grunt) {
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
-  grunt.loadNpmTasks("grunt-autoprefixer");
-  grunt.loadNpmTasks("grunt-concurrent");
-  grunt.loadNpmTasks("grunt-contrib-clean");
-  grunt.loadNpmTasks("grunt-contrib-coffee");
-  grunt.loadNpmTasks("grunt-contrib-compass");
-  grunt.loadNpmTasks("grunt-contrib-concat");
-  grunt.loadNpmTasks("grunt-contrib-connect");
-  grunt.loadNpmTasks("grunt-contrib-copy");
-  grunt.loadNpmTasks("grunt-contrib-cssmin");
-  grunt.loadNpmTasks("grunt-contrib-htmlmin");
-  grunt.loadNpmTasks("grunt-contrib-jshint");
-  grunt.loadNpmTasks("grunt-contrib-jade");
-  grunt.loadNpmTasks("grunt-contrib-uglify");
-  grunt.loadNpmTasks("grunt-contrib-watch");
-  grunt.loadNpmTasks("grunt-google-cdn");
-  grunt.loadNpmTasks("grunt-newer");
-  grunt.loadNpmTasks("grunt-ngmin");
-  grunt.loadNpmTasks("grunt-rev");
-  grunt.loadNpmTasks("grunt-usemin");
+  grunt.loadNpmTasks('grunt-autoprefixer');
+  grunt.loadNpmTasks('grunt-concurrent');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-coffee');
+  grunt.loadNpmTasks('grunt-contrib-compass');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-htmlmin');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-jade');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-google-cdn');
+  grunt.loadNpmTasks('grunt-newer');
+  grunt.loadNpmTasks('grunt-ngmin');
+  grunt.loadNpmTasks('grunt-rev');
+  grunt.loadNpmTasks('grunt-usemin');
   grunt.loadNpmTasks('grunt-connect-proxy');
 
   // Define the configuration for all the tasks
@@ -137,12 +137,12 @@ module.exports = function (grunt) {
       },
       proxies: [
         {
-            context: '/api',
-            host: 'sidelined.local',
-            port: 80,
-            https: false,
-            changeOrigin: false,
-            xforward: false
+          context: '/api',
+          host: 'sidelined.local',
+          port: 80,
+          https: false,
+          changeOrigin: false,
+          xforward: false
         }
       ]
     },

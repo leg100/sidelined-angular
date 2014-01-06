@@ -39,8 +39,8 @@ angular.module('sidelinedApp')
         source: $scope.injury.source,
         quote: $scope.injury.quote,
         player: $scope.injury.player.id,
-        return_date: $scope.injury.returnDate
-      }).create().then(function(injury) {
+        returnDate: $scope.injury.returnDate
+      }).create().then(function() {
         AlertBroker.success('Added new injury to '+ $scope.injury.player.tickerAndName);
         InjuryListingService.broadcastItem();
       }, function(err) {

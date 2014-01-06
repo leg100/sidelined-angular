@@ -9,7 +9,7 @@ angular.module('sidelinedApp')
 
     function closeLastAlert() {
       $scope.alerts.pop();
-    };
+    }
 
     function createAlert(type) {
       $scope.alerts.push({
@@ -17,7 +17,7 @@ angular.module('sidelinedApp')
         type: type
       });
       $timeout(closeLastAlert, 5000);
-    };
+    }
 
     $scope.$on('alert-success', function() {
       createAlert('success');

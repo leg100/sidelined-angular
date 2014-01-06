@@ -27,7 +27,7 @@ angular.module('sidelinedApp', ['ui.router', 'rails', 'ui.bootstrap', 'http-auth
       $scope.$watch('$state.$current.locals.globals.injury', function(injury) {
         $scope.injury = injury;
       });
-      $scope.revision_templates = {
+      $scope.revisionTemplates = {
         create: '/views/revisions/create.html',
         update: '/views/revisions/update.html'
       };

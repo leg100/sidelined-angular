@@ -12,9 +12,9 @@ angular.module('sidelinedApp')
 
     $scope.$on('handleBroadcast', function() {
       Injury.query({page: 1, _type: 'Injury'})
-        .then(function(resp) {
-           $scope.injuries = resp;
-        });
+      .then(function(resp) {
+        $scope.injuries = resp;
+      });
     });
 
     $scope.removeInjury = function(index) {
@@ -22,10 +22,10 @@ angular.module('sidelinedApp')
 
       injury.remove().then(function(resp){
         Injury.query({page: 1})
-          .then(function(resp) {
-             $scope.injuries = resp;
-          });
-        AlertBroker.success("Removed injury "+ resp.id);
+        .then(function(resp) {
+          $scope.injuries = resp;
+        });
+        AlertBroker.success('Removed injury '+ resp.id);
       });
     };
 

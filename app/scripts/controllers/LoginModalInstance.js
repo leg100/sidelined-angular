@@ -14,7 +14,7 @@ angular.module('sidelinedApp')
       // Clear any previous security errors
       $scope.authError = null;
 
-      security.login($scope.user.email, $scope.user.password).then(function(response) {
+      security.login($scope.user.email, $scope.user.password).then(function() {
         $modalInstance.close();
       }, function(err) {
         $scope.authError = err;
