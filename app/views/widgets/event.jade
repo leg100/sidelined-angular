@@ -1,0 +1,8 @@
+.row
+  .col-md-1
+    | {{event._type}} 
+  .col-md-1
+    | {{event.version}} 
+  .col-md-1
+    | {{event.modifier.username}} 
+  button.btn.btn-danger(ng-click="removeEvent($index)") Delete

@@ -1,0 +1,14 @@
+.col-xs-3
+  h5 
+    | Created
+  dl.dl-horizontal
+    dt User
+    dd
+      | {{revision.modifier.username}}
+    dt Created at
+    dd
+      | {{revision.updatedAt|date:'MMM d, y h:mm:ss a'}}
+.col-xs-9
+  pre
+    | {{revision.modified|json}}
+

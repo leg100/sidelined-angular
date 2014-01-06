@@ -1,0 +1,10 @@
+ul.nav.pull-right
+  li.divider-vertical
+  li(ng-show="isAuthenticated()")
+    a href="#" {{username}}
+  li.logout(ng-show="isAuthenticated()")
+    form.navbar-form
+      button.btn.logout(ng-click="logout()") Log out
+  li.login(ng-hide="isAuthenticated()")
+    form.navbar-form(ng-controller="LoginModalController")
+      button.btn.login(ng-click="open()") Log in

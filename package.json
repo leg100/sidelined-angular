@@ -42,7 +42,9 @@
     "karma-phantomjs-launcher": "~0.1.1",
     "karma": "~0.10.9",
     "karma-ng-html2js-preprocessor": "~0.1.0",
-    "grunt-contrib-jade": "~0.9.1"
+    "grunt-contrib-jade": "~0.9.1",
+    "grunt-connect-proxy": "~0.1.7",
+    "connect-modrewrite": "~0.5.11"
   },
   "engines": {
     "node": ">=0.8.0"

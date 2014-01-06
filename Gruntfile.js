@@ -30,6 +30,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-ngmin");
   grunt.loadNpmTasks("grunt-rev");
   grunt.loadNpmTasks("grunt-usemin");
+  grunt.loadNpmTasks('grunt-connect-proxy');
 
   // Define the configuration for all the tasks
   grunt.initConfig({
@@ -50,7 +51,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%= yeoman.app %>',
           dest: '.tmp',
-          src: '{,*/}*.jade',
+          src: '**/*.jade',
           ext: '.html'
         }]
       }
@@ -58,7 +59,7 @@ module.exports = function (grunt) {
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       jade: {
-        files: ['<%= yeoman.app %>/{,*/}*.jade'],
+        files: ['<%= yeoman.app %>/**/*.jade'],
         tasks: ['jade']
       },
       js: {
@@ -107,7 +108,16 @@ module.exports = function (grunt) {
           base: [
             '.tmp',
             '<%= yeoman.app %>'
-          ]
+          ],
+          middleware: function(connect, options) {
+            return [
+              require('grunt-connect-proxy/lib/utils').proxyRequest,
+              require('connect-modrewrite')(['!(\\..+)$ / [L]']),
+              connect.static('.tmp'),
+              connect.static(grunt.config.data.yeoman.app),
+              connect.directory('<%= yeoman.app %>')
+            ];
+          }
         }
       },
       test: {
@@ -124,7 +134,17 @@ module.exports = function (grunt) {
         options: {
           base: '<%= yeoman.dist %>'
         }
-      }
+      },
+      proxies: [
+        {
+            context: '/api',
+            host: 'sidelined.local',
+            port: 80,
+            https: false,
+            changeOrigin: false,
+            xforward: false
+        }
+      ]
     },
 
     // Make sure code styles are up to par and there are no obvious mistakes
@@ -175,9 +195,6 @@ module.exports = function (grunt) {
       }
     },
 
-    
-
-    
     // Compiles Sass to CSS and generates necessary files if requested
     compass: {
       options: {
@@ -333,32 +350,6 @@ module.exports = function (grunt) {
       ]
     },
 
-    // By default, your `index.html`'s <!-- Usemin block --> will take care of
-    // minification. These next options are pre-configured if you do not wish
-    // to use the Usemin blocks.
-    // cssmin: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/styles/main.css': [
-    //         '.tmp/styles/{,*/}*.css',
-    //         '<%= yeoman.app %>/styles/{,*/}*.css'
-    //       ]
-    //     }
-    //   }
-    // },
-    // uglify: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/scripts/scripts.js': [
-    //         '<%= yeoman.dist %>/scripts/scripts.js'
-    //       ]
-    //     }
-    //   }
-    // },
-    // concat: {
-    //   dist: {}
-    // },
-
     // Test settings
     karma: {
       unit: {
@@ -377,6 +368,7 @@ module.exports = function (grunt) {
       'clean:server',
       'concurrent:server',
       'autoprefixer',
+      'configureProxies',
       'connect:livereload',
       'watch'
     ]);

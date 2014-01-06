@@ -1,0 +1,51 @@
+.row
+  .col-xs-3.injury-form-container
+    form(novalidate name="form" ng-controller="InjuryEditCtrl")
+      .form-group
+        select.form-control(ng-model="injury.status" required)
+          option(value="injured" ng-selected="injury.status=='injured'") Injured
+          option(value="doubt" ng-selected="injury.status=='doubt'") Doubt
+          option(value="recovered" ng-selected="injury.status=='recovered'") Recovered
+      .form-group
+        input.form-control(type="text" datepicker-popup="{{format}}" ng-model="injury.returnDate" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" close-text="Close" placeholder="Return date")
+      .form-group
+        textarea.form-control(rows="3" ng-model="injury.quote" placeholder="Quote")
+      .form-group
+        input.form-control(type="text" ng-model="injury.source" placeholder="News source")
+      .form-group
+        button.btn.btn-default(ng-click="update()" ng-disabled="!canUpdate()") Update {{type}}
+  .col-xs-9.injury-container
+    .row
+      .col-xs-8.alert-container(ng-controller="AlertCtrl")
+        alert(ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)") {{alert.msg}}
+    .row
+      .col-xs-12
+        h3 Injury
+        dl.dl-horizontal
+          dt Status 
+          dd 
+            | {{injury.status|capitalize}}
+          dt Player 
+          dd 
+            | {{injury.player.longName}}
+          dt Return date 
+          dd 
+            | {{injury.returnDate|date:'dd-MMMM-yyyy'||'Unknown'}}
+          dt Quote
+          dd 
+            | {{injury.quote}}
+          dt Source
+          dd 
+            | {{injury.source}}
+          dt Last update
+          dd 
+            | {{injury.updatedAt|date:'MMM d, y h:mm:ss a'}}
+    .row
+      .col-xs-12
+        h4 Revisions
+        .row(ng-repeat="revision in injury.revisions")
+          ng-include(src="revision_templates[revision.action]")
+    .row
+      .col-xs-12
+        pre
+          | {{injury.revisions|json}}

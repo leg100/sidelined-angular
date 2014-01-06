@@ -1,0 +1,38 @@
+.row
+  .col-xs-12.widget
+    .row
+      .col-xs-2.margin
+        .row
+          .col-xs-8.col-xs-push-4.team-colors.text-right
+            .row
+              .col-xs-12.ticker
+                h4 
+                  | {{injury.player.shortName}}
+            .row
+              .col-xs-12.player-name
+                h5
+                  i
+                    small 
+                      | {{injury.player.longName}} 
+      .col-xs-10.col-xs-offset-2.event
+        .row
+          .col-xs-10
+            span.h4.injury 
+              span Injury:
+              span.status 
+                | {{injury.status|capitalize}}
+            span.h4.out
+              i.small Out for 9 more days
+          .col-xs-2.text-right.h4.ago
+            small 
+              | {{injury.updatedAt|ago}}
+        .row.quote
+          span
+            | {{injury.quote}}
+          span.detail-link
+            a(ui-sref="injury({id: injury.id})") Detail
+        .row
+          .col-xs-5.col-xs-push-7.text-right
+            span.h5.small Posted by {{injury.modifier.username}}
+            button.btn.btn-primary.btn-xs.micro-button(ng-click="updateInjury()") Update
+            button.btn.btn-xs.btn-danger.micro-button(ng-click="removeInjury($index)") Delete

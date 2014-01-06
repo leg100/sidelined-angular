@@ -1,0 +1,22 @@
+.row
+  .col-md-12(ng-controller="RevisionListCtrl")
+    .row
+      pagination(total-items="totalItems" page="currentPage" max-size="maxSize" on-select-page="goToPage(page)" items-per-page="itemsPerPage")
+    div(ng-repeat="revision in revisions" ng-controller="RevisionCtrl")
+      .row
+        .col-md-1
+          | {{revision.version}} 
+        .col-md-1
+          | {{revision.action}} 
+        .col-md-1
+          | {{revision.modifier.username}} 
+        .col-md-1
+          | {{revision.associationChain[0].name}} 
+        .col-md-3
+          pre 
+            | {{revision.original|json}}
+        .col-md-3
+          pre 
+            | {{revision.modified|json}}
+        .col-md-2
+          | {{revision.updatedAt|date:format}}
