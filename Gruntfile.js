@@ -26,6 +26,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-google-cdn');
+  grunt.loadNpmTasks('grunt-open');
   grunt.loadNpmTasks('grunt-newer');
   grunt.loadNpmTasks('grunt-ngmin');
   grunt.loadNpmTasks('grunt-rev');
@@ -149,7 +150,14 @@ module.exports = function (grunt) {
           changeOrigin: false,
           xforward: false
         }
-      ]
+      ],
+      coverage: {
+        options: {
+          base: 'coverage/',
+          port: 5555,
+          keepalive: true
+        }
+      }
     },
 
     // Make sure code styles are up to par and there are no obvious mistakes
@@ -360,14 +368,30 @@ module.exports = function (grunt) {
       unit: {
         configFile: 'karma.conf.js',
         background: true
+      },
+      unit_coverage: {
+        background: false,
+        configFile: 'karma-coverage.conf.js',
+        autoWatch: false,
+        singleRun: true,
+        reporters: ['progress', 'coverage'],
+        preprocessors: {
+          'app/scripts/*.js': ['coverage']
+        },
+        coverageReporter: {
+          type : 'html',
+          dir : 'coverage/'
+        }
       }
-    }
-    //karma: {
-    //  unit: {
-    //    configFile: 'karma.conf.js',
-    //    singleRun: true
-    //  }
-    //}
+    },
+    open: {
+      devserver: {
+        path: 'http://localhost:8888'
+      },
+      coverage: {
+        path: 'http://localhost:5555'
+      }
+    },
   });
 
   grunt.registerTask('serve', function (target) {
@@ -386,6 +410,8 @@ module.exports = function (grunt) {
     ]);
   });
 
+  grunt.registerTask('coverage', ['karma:unit_coverage','open:coverage','connect:coverage']);
+  grunt.registerTask('test:coverage', ['karma:unit_coverage']);
   grunt.registerTask('test', [
     'clean:server',
     'concurrent:test',
