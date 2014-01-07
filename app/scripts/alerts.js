@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('sidelinedApp')
+angular.module('sidelinedApp.alerts', [])
   .controller('AlertCtrl', ['$scope', 'AlertBroker', '$timeout', function($scope, AlertBroker, $timeout) {
     $scope.alerts = [];
     $scope.closeAlert = function(index) {
@@ -26,4 +26,18 @@ angular.module('sidelinedApp')
     $scope.$on('alert-error', function() {
       createAlert('danger');
     });
+  }])
+  // vidiprinter broker
+  .factory('AlertBroker', ['$rootScope', function($rootScope) {
+    var alertBroker = {};
+    alertBroker.success = function(msg) {
+      this.message = msg;
+      $rootScope.$broadcast('alert-success');
+    };
+    alertBroker.error = function(msg) {
+      this.message = msg;
+      $rootScope.$broadcast('alert-error');
+    };
+    return alertBroker;
   }]);
+  

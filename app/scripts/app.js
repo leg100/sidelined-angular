@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('sidelinedApp', ['sidelinedApp.directives', 'ui.router', 'rails', 'ui.bootstrap', 'http-auth-interceptor'])
+angular.module('sidelinedApp', ['sidelinedApp.directives', 'sidelinedApp.injuries', 'ui.router', 'rails', 'ui.bootstrap', 'http-auth-interceptor'])
 .config(function($locationProvider, $stateProvider, $urlRouterProvider) {
   $locationProvider.html5Mode(true).hashPrefix('!');
   $urlRouterProvider.otherwise('/injuries');

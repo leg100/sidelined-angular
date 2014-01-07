@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('sidelinedApp')
+angular.module('sidelinedApp.players', ['rails'])
   .factory('Player', ['railsResourceFactory', function(railsResourceFactory) {
     return railsResourceFactory({
       url: '/api/players',
