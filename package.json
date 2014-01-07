@@ -44,7 +44,7 @@
     "karma-ng-html2js-preprocessor": "~0.1.0",
     "grunt-contrib-jade": "~0.9.1",
     "grunt-connect-proxy": "~0.1.7",
-    "connect-modrewrite": "~0.5.11"
+    "connect-modrewrite": "~0.5.11",
     "karma-coverage": "~0.1.4",
     "grunt-open": "~0.2.2"
   },
