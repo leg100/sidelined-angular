@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Service: Player', function () {
+xdescribe('Service: Player', function () {
 
   // load the service's module
   beforeEach(module('sidelinedApp'));

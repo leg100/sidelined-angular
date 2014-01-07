@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Controller: LoginmodalCtrl', function () {
+xdescribe('Controller: LoginmodalCtrl', function () {
 
   // load the controller's module
   beforeEach(module('sidelinedApp'));

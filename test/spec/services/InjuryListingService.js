@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Service: Injurylistingservice', function () {
+xdescribe('Service: Injurylistingservice', function () {
 
   // load the service's module
   beforeEach(module('sidelinedApp'));

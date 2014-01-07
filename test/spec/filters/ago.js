@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Filter: ago', function () {
+xdescribe('Filter: ago', function () {
 
   // load the filter's module
   beforeEach(module('sidelinedApp'));

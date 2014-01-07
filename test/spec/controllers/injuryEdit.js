@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Controller: InjuryeditCtrl', function () {
+xdescribe('Controller: InjuryeditCtrl', function () {
 
   // load the controller's module
   beforeEach(module('sidelinedApp'));

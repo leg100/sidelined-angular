@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Filter: capitalize', function () {
+xdescribe('Filter: capitalize', function () {
 
   // load the filter's module
   beforeEach(module('sidelinedApp'));

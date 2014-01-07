@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Controller: InjuryaddCtrl', function () {
+xdescribe('Controller: InjuryaddCtrl', function () {
 
   // load the controller's module
   beforeEach(module('sidelinedApp'));
