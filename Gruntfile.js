@@ -31,6 +31,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-rev');
   grunt.loadNpmTasks('grunt-usemin');
   grunt.loadNpmTasks('grunt-connect-proxy');
+  grunt.loadNpmTasks('grunt-karma');
 
   // Define the configuration for all the tasks
   grunt.initConfig({
@@ -91,6 +92,10 @@ module.exports = function (grunt) {
           '.tmp/styles/{,*/}*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
+      },
+      karma: {
+        files: ['app/scripts/**/*.js', 'test/spec/**/*.js'],
+        tasks: ['karma:unit:run'] //NOTE the :run flag
       }
     },
 
@@ -354,9 +359,15 @@ module.exports = function (grunt) {
     karma: {
       unit: {
         configFile: 'karma.conf.js',
-        singleRun: true
+        background: true
       }
     }
+    //karma: {
+    //  unit: {
+    //    configFile: 'karma.conf.js',
+    //    singleRun: true
+    //  }
+    //}
   });
 
   grunt.registerTask('serve', function (target) {
@@ -370,6 +381,7 @@ module.exports = function (grunt) {
       'autoprefixer',
       'configureProxies',
       'connect:livereload',
+      'karma:unit:start',
       'watch'
     ]);
   });
@@ -379,7 +391,7 @@ module.exports = function (grunt) {
     'concurrent:test',
     'autoprefixer',
     'connect:test',
-    'karma'
+    'karma:unit'
   ]);
 
   grunt.registerTask('build', [
