@@ -1,50 +1,26 @@
-html
-  head
-    link(rel='stylesheet', href='/styles/main.css')
-    script(src='/bower_components/angular/angular.js')
-    script(src='/bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
-    script(src='/scripts/directives/ensureUnique.js')
-    script(src='/scripts/directives/equals.js')
-    script.
-      angular.module('sidelinedApp')
-        .controller('myFormCtrl', function($scope) {
-          $scope.user = {};
-          $scope.getClass = function(ngModelCtrl) {
-            return {
-              'has-success': ngModelCtrl.$dirty && ngModelCtrl.$valid,
-              'has-error': ngModelCtrl.$dirty && ngModelCtrl.$invalid
-            };
-          }
-          $scope.showError = function(ngModelCtrl, error) {
-            return ngModelCtrl.$error[error];
-          }
-        });
-
-  body(ng-app="sidelinedApp")
-    form(novalidate name="form" class="signup-form" ng-controller="myFormCtrl")
-      .modal-header
-        h4 Sign up
-        .modal-body
-          div.alert.alert-warning(ng-show="authReason") {{authReason}}
-          div.alert.alert-error(ng-show="authError") {{authError}}
-          div.alert.alert-info Please enter your details
-          .form-group(ng-class="getClass(form.username)")
-            label.control-label(for="username") Username
-            input.form-control(name="username" type="text" ng-model="user.username" ensure-unique required autofocus)
-            span.help-block(ng-show="showError(form.username,'unique')") This username is taken.
-          .form-group(ng-class="getClass(form.email)")
-            label.control-label(for="email") E-mail
-            input.form-control(name="email" type="email" ng-model="user.email" required ensure-unique)
-            span.help-block(ng-show="showError(form.email,'unique')") This email is taken.
-          .form-group(ng-class="getClass(form.value1)")
-            label.control-label(for="value1") Password
-            input.form-control(name="value1" type="password" ng-model="value1" required equals="{{value2}}")
-            span.help-block(ng-show="showError(form.value1,'equals')") The passwords do not match.
-          .form-group(ng-class="getClass(form.value2)")
-            label.control-label(for="value2") Confirm Password
-            input.form-control(name="value2" type="password" ng-model="value2" equals="{{value1}}" required)
-            span.help-block(ng-show="showError(form.value2,'equals')") The passwords do not match.
-        div.modal-footer
-          button.btn.btn-primary.login(ng-click="signup()" ng-disabled='form.$invalid') Sign up
-          button.btn.clear(ng-click="clear()") Clear
-          button.btn.btn-warning.cancel(ng-click="cancel()") Cancel
+form(novalidate name="form" class="signup-form")
+  .modal-header
+    h4 Sign up
+    .modal-body
+      div.alert.alert-warning(ng-show="authReason") {{authReason}}
+      div.alert.alert-error(ng-show="authError") {{authError}}
+      div.alert.alert-info Please enter your details
+      .form-group(ng-class="getClass(form.username)")
+        label.control-label(for="username") Username
+        input.form-control(name="username" type="text" ng-model="user.username" ensure-unique required autofocus)
+        span.help-block(ng-show="showError(form.username,'unique')") This username is taken.
+      .form-group(ng-class="getClass(form.email)")
+        label.control-label(for="email") E-mail
+        input.form-control(name="email" type="email" ng-model="user.email" required ensure-unique)
+        span.help-block(ng-show="showError(form.email,'unique')") This email is taken.
+      .form-group(ng-class="getClass(form.password)")
+        label.control-label(for="password") Password
+        input.form-control(name="password" type="password" ng-model="user.password" required equals="user.passwordConfirmation")
+        span.help-block(ng-show="showError(form.password,'equals')") The passwords do not match.
+      .form-group(ng-class="getClass(form.passwordConfirmation)")
+        label.control-label(for="passwordConfirmation") Confirm Password
+        input.form-control(name="passwordConfirmation" type="password" ng-model="user.passwordConfirmation" required)
+    div.modal-footer
+      button.btn.btn-primary.login(ng-click="signup()" ng-disabled='form.$invalid') Sign up
+      button.btn.clear(ng-click="clear()") Clear
+      button.btn.btn-warning.cancel(ng-click="cancel()") Cancel

@@ -45,6 +45,14 @@ describe('Directive: equals', function () {
       scope.model.value1 = 'abc';
       scope.$digest();
       expect(form.value1.$valid).toBe(true);
+      expect(form.value2.$valid).toBe(true);
+    }));
+    it('it should show correct values in input', inject(function () {
+      scope.model.value1 = 'abc';
+      scope.model.value2 = 'abc';
+      scope.$digest();
+      expect(form.value1.$viewValue).toBe('abc');
+      expect(form.value2.$viewValue).toBe('abc');
     }));
   });
 

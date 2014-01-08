@@ -10,6 +10,31 @@ angular.module('sidelinedApp')
 
     // the public api of the service
     var service = {
+      signup: function(username, password, passwordConfirmation, email) {
+        $http.defaults.headers.post = {
+          'Accept' : 'application/json',
+          'Content-Type' : 'application/json'
+        };
+        return $http.post('/api/signup', {
+          user: {
+            username: username,
+            password: password,
+            passwordConfirmation: passwordConfirmation,
+            email: email
+          }
+        }).then(function(resp) {
+          if (resp.data.success) {
+            service.currentUser = resp.data.data.username;
+            return resp.data.data.username;
+          } else {
+            // reject promise with error message
+            return $q.reject(resp.data.info);
+          }
+        }, function(resp) {
+          return $q.reject(resp.data.info);
+        });
+      },
+
       login: function(email, password) {
         $http.defaults.headers.post = {
           'Accept' : 'application/json',

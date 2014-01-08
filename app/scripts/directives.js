@@ -10,13 +10,13 @@ angular.module('sidelinedApp.directives', [])
           var other = scope.$eval(attrs.equals);
           var valid = (val === other);
           ngModel.$setValidity('equals', valid);
-          return valid ? valid : undefined;
+          return valid ? val : undefined;
         }
 
         ngModel.$parsers.push(validateEqual);
         ngModel.$formatters.push(validateEqual);
 
-        // watch changes to other value (because the other ngModel doesn't have a directive to watch it!
+        // watch changes to other value
         scope.$watch(attrs.equals, function() {
           // trigger parsers pipeline
           ngModel.$setViewValue(ngModel.$viewValue);
