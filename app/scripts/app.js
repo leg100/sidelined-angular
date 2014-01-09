@@ -21,17 +21,8 @@ angular.module('sidelinedApp', ['sidelinedApp.directives', 'sidelinedApp.injurie
   .state('injury', {
     url: '/injuries/:id',
     templateUrl: '/views/pages/injury.html',
-    controller: function($scope, $state, action) {
-      $scope.action = action;
-      $scope.$state = $state;
-      $scope.$watch('$state.$current.locals.globals.injury', function(injury) {
-        $scope.injury = injury;
-      });
-      $scope.revisionTemplates = {
-        create: '/views/revisions/create.html',
-        update: '/views/revisions/update.html'
-      };
-    },
+    controller: 'InjuryShowCtrl',
+   
     resolve: {
       action: function() {
         return 'update';

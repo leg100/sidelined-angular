@@ -12,6 +12,19 @@ describe('Service: Injury', function () {
     $httpBackend = _$httpBackend_;
   }));
 
+  it('should revert an injury', function () {
+    var promise, result;
+    $httpBackend.expect('POST', '/api/injuries/123abc/revert').respond({
+       injury
+    });
+    promise = scope.revert(1);
+    promise.then(function(resp) {
+      result = resp.data;
+    });
+    $httpBackend.flush();
+    expect(result).toEqual(['p1']);
+  });
+
   it('should retrieve list of all injuries', function () {
     var promise, result;
     $httpBackend.expect('GET', '/api/injuries').respond(['p1']);

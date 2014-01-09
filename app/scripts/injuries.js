@@ -54,10 +54,6 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
   }])
   .controller('InjuryEditCtrl', ['$scope', 'Injury', 'AlertBroker', '$state', function($scope, Injury, AlertBroker, $state) {
 
-    $scope.$watch('$state.$current.locals.globals.injury', function(injury) {
-      $scope.injury = injury;
-    });
-
     // datepicker
     $scope.dateOptions = {
       'year-format': 'yy',
@@ -116,6 +112,28 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
       $location.path('/all/'+ page);
     };
   }])
+  .controller('InjuryShowCtrl', ['$scope', '$state', 'action', 'Injury', 'AlertBroker', function($scope, $state, action, Injury, AlertBroker) {
+    $scope.action = action;
+    $scope.$state = $state;
+    $scope.$watch('$state.$current.locals.globals.injury', function(injury) {
+      $scope.injury = injury;
+    });
+    $scope.revisionTemplates = {
+      create: '/views/revisions/create.html',
+      update: '/views/revisions/update.html'
+    };
+    $scope.revert = function(version) {
+      Injury.$post('/api/injuries/'+$scope.injury.id+'/revert', {
+        version: version
+      }).then(function(resp) {
+        console.log(resp);
+        $scope.injury = resp;
+        AlertBroker.success("updated injury to version "+$scope.injury.version);
+      }, function(err) {
+        AlertBroker.error(err.data.info);
+      });
+    };
+  }])  
   .factory('Injury', ['railsResourceFactory', function(railsResourceFactory) {
     return railsResourceFactory({
       url: '/api/injuries',

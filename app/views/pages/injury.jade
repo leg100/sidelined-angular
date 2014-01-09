@@ -40,10 +40,13 @@
           dt Last update
           dd 
             | {{injury.updatedAt|date:'MMM d, y h:mm:ss a'}}
+          dt Version
+          dd 
+            | {{injury.version}}
     .row
       .col-xs-12
         h4 Revisions
-        .row(ng-repeat="revision in injury.revisions")
+        div(ng-repeat="revision in injury.revisions")
           ng-include(src="revisionTemplates[revision.action]")
     .row
       .col-xs-12

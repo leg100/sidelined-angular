@@ -1,14 +1,25 @@
-.col-xs-3
-  h5 
-    | Updated
-  dl.dl-horizontal
-    dt User
-    dd
-      | {{revision.modifier.username}}
-    dt Updated at
-    dd
-      | {{revision.updatedAt|date:'MMM d, y h:mm:ss a'}}
-.col-xs-9
-  pre
-    | {{revision.modified|json}}
+.row
+  .col-xs-12
+    span.h5.revision Updated
+    button.btn.btn-warning(ng-click="revert(revision.version)" ng-hide="injury.version == revision.version") Revert to version {{revision.version}}
+.row
+  .col-xs-3
+    dl.dl-horizontal
+      dt User
+      dd
+        | {{revision.modifier.username}}
+      dt Updated at
+      dd
+        | {{revision.updatedAt|date:'MMM d, y h:mm:ss a'}}
+  .col-xs-9
+    .row
+      .col-xs-2 Before
+      .col-xs-10
+        pre
+          | {{revision.original|json}}
+    .row
+      .col-xs-2 After
+      .col-xs-10
+        pre
+          | {{revision.modified|json}}
 
