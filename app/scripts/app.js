@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('sidelinedApp', ['sidelinedApp.directives', 'sidelinedApp.injuries', 'ui.router', 'rails', 'ui.bootstrap', 'http-auth-interceptor'])
-.config(function($locationProvider, $stateProvider, $urlRouterProvider) {
+.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', function($locationProvider, $stateProvider, $urlRouterProvider) {
   $locationProvider.html5Mode(true).hashPrefix('!');
   $urlRouterProvider.otherwise('/injuries');
   $stateProvider
@@ -13,9 +13,9 @@ angular.module('sidelinedApp', ['sidelinedApp.directives', 'sidelinedApp.injurie
       action: function() {
         return 'add';
       },
-      injuries: function(Injury) {
+      injuries: ['Injury', function(Injury) {
         return Injury.query();
-      }
+      }]
     }
   })
   .state('injury', {
@@ -27,11 +27,11 @@ angular.module('sidelinedApp', ['sidelinedApp.directives', 'sidelinedApp.injurie
       action: function() {
         return 'update';
       },
-      injury: function(Injury, $stateParams) {
+      injury: ['Injury', '$stateParams', function(Injury, $stateParams) {
         return Injury.get($stateParams.id);
-      }
+      }]
     }
   });
-}).run(function(Session) {
+}]).run(['Session', function(Session) {
   Session.requestCurrentUser();
-});
+}]);
