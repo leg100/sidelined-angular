@@ -32,12 +32,12 @@ html.no-js
                 button.btn.login(ng-click="open()") Log in
     .container(ng-view='')
       .ui-view
+    // build:js({.tmp,app}) /scripts/scripts.js
     script(src='/bower_components/angular/angular.js')
     script(src='/bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
     script(src='/bower_components/angular-ui-router/release/angular-ui-router.js')
     script(src='/bower_components/angularjs-rails-resource/angularjs-rails-resource.js')
     script(src='/bower_components/angular-http-auth/src/http-auth-interceptor.js')
-    // build:js({.tmp,app}) /scripts/scripts.js
     script(src='/scripts/app.js')
     script(src='/scripts/controllers/LoginModal.js')
     script(src='/scripts/controllers/LoginModalInstance.js')
