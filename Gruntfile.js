@@ -425,7 +425,6 @@ module.exports = function (grunt) {
     'autoprefixer',
     'concat',
     'ngmin',
-    'copy:dist',
     'cdnify',
     'cssmin',
     'uglify',
