@@ -26,6 +26,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-google-cdn');
   grunt.loadNpmTasks('grunt-open');
+  grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-newer');
   grunt.loadNpmTasks('grunt-ngmin');
   grunt.loadNpmTasks('grunt-rev');
@@ -41,6 +42,11 @@ module.exports = function (grunt) {
       // configurable paths
       app: require('./bower.json').appPath || 'app',
       dist: 'dist'
+    },
+    shell: {
+      deploy: {
+        command: 'scp -r dist/* do:/var/www/angular/'
+      }
     },
 
     jade: {
@@ -417,6 +423,11 @@ module.exports = function (grunt) {
     'autoprefixer',
     'connect:test',
     'karma:unit'
+  ]);
+
+  grunt.registerTask('deploy', [
+    'build',
+    'shell:deploy'
   ]);
 
   grunt.registerTask('build', [

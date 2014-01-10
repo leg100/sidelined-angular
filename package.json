@@ -46,7 +46,8 @@
     "grunt-connect-proxy": "~0.1.7",
     "connect-modrewrite": "~0.5.11",
     "karma-coverage": "~0.1.4",
-    "grunt-open": "~0.2.2"
+    "grunt-open": "~0.2.2",
+    "grunt-shell": "~0.6.1"
   },
   "engines": {
     "node": ">=0.8.0"
