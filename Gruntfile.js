@@ -117,7 +117,10 @@ module.exports = function (grunt) {
           middleware: function(connect, options) {
             return [
               require('grunt-connect-proxy/lib/utils').proxyRequest,
-              require('connect-modrewrite')(['!(\\..+)$ / [L]']),
+              //require('connect-modrewrite')(['!(\\..+)$ / [L]']),
+              require('connect-modrewrite')([
+                '^/injuries(/.*)? / [L]'
+              ]),
               connect.static('.tmp'),
               connect.static(grunt.config.data.yeoman.app),
               connect.directory('<%= yeoman.app %>')
@@ -320,10 +323,9 @@ module.exports = function (grunt) {
           dest: '<%= yeoman.dist %>',
           src: [
             '*.{ico,png,txt}',
-            '.htaccess',
-            'bower_components/**/*',
             'images/{,*/}*.{webp}',
-            'fonts/*'
+            'fonts/*',
+            '*.html'
           ]
         }, {
           expand: true,
@@ -425,6 +427,7 @@ module.exports = function (grunt) {
     'autoprefixer',
     'concat',
     'ngmin',
+    'copy:dist',
     'cdnify',
     'cssmin',
     'uglify',

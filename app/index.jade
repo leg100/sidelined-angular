@@ -11,7 +11,7 @@ html.no-js
     link(rel='stylesheet', href='/styles/main.css')
     link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Oswald:400')
     // endbuild
-  body(ng-app='sidelinedApp')
+  body(ng-app='sidelinedApp' ng-controller='SiteCtrl')
     nav.navbar.navbar-default.navbar-static-top
       .container
         .navbar-header
@@ -39,6 +39,7 @@ html.no-js
     script(src='/bower_components/angularjs-rails-resource/angularjs-rails-resource.js')
     script(src='/bower_components/angular-http-auth/src/http-auth-interceptor.js')
     script(src='/scripts/app.js')
+    script(src='/scripts/controllers/Site.js')
     script(src='/scripts/controllers/LoginModal.js')
     script(src='/scripts/controllers/LoginModalInstance.js')
     script(src='/scripts/controllers/LoginStatus.js')

@@ -31,6 +31,10 @@ angular.module('sidelinedApp', ['sidelinedApp.directives', 'sidelinedApp.injurie
         return Injury.get($stateParams.id);
       }]
     }
+  })
+  .state('error', {
+    template: '<h1>HTTP500</h1>',
+    url: '/error'
   });
 }]).run(['Session', function(Session) {
   Session.requestCurrentUser();
