@@ -3,7 +3,7 @@
     form(novalidate name="form" ng-controller="InjuryEditCtrl")
       .form-group
         select.form-control(ng-model="injury.status" required)
-          option(value="injured" ng-selected="injury.status=='injured'") Injured
+          option(value="confirmed" ng-selected="injury.status=='confirmed'") Confirmed
           option(value="doubt" ng-selected="injury.status=='doubt'") Doubt
           option(value="recovered" ng-selected="injury.status=='recovered'") Recovered
       .form-group
