@@ -125,7 +125,9 @@ module.exports = function (grunt) {
               require('grunt-connect-proxy/lib/utils').proxyRequest,
               //require('connect-modrewrite')(['!(\\..+)$ / [L]']),
               require('connect-modrewrite')([
-                '^/injuries(/.*)? / [L]'
+                '^/injuries(/.*)? / [L]',
+                '^/signup / [L]',
+                '^/confirmed(.*)? / [L]'
               ]),
               connect.static('.tmp'),
               connect.static(grunt.config.data.yeoman.app),

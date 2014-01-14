@@ -26,8 +26,7 @@ html.no-js
               form.navbar-form
                 button.btn.logout(ng-click="logout()") Log out
             li.signup(ng-hide="isAuthenticated()")
-              form.navbar-form(ng-controller="SignupModalCtrl")
-                button.btn.signup(ng-click="open()") Sign up
+              a.btn.signup(ui-sref="signup") Sign up
             li.login(ng-hide="isAuthenticated()")
               form.navbar-form(ng-controller="LoginModalCtrl")
                 button.btn.login(ng-click="open()") Log in
@@ -44,8 +43,7 @@ html.no-js
     script(src='/scripts/controllers/LoginModal.js')
     script(src='/scripts/controllers/LoginModalInstance.js')
     script(src='/scripts/controllers/LoginStatus.js')
-    script(src='/scripts/controllers/SignupModal.js')
-    script(src='/scripts/controllers/SignupModalInstance.js')
+    script(src='/scripts/controllers/Signup.js')
     script(src='/scripts/services/Session.js')
     script(src='/scripts/filters/ago.js')
     script(src='/scripts/filters/capitalize.js')

@@ -1,16 +1,13 @@
 'use strict';
 
 angular.module('sidelinedApp')
-  .controller('SignupModalInstanceCtrl', ['$scope', '$modalInstance', 'Session', 'reason', function($scope, $modalInstance, security, reason) {
+  .controller('SignupCtrl', ['$scope', 'Session', 'AlertBroker', function($scope, security, AlertBroker) {
     $scope.user = {
       username: null,
       email: null,
       password: null,
       passwordConfirmation: null
     };
-
-    $scope.authError = null;
-    $scope.authReason = reason;
 
     $scope.getClass = function(ngModelCtrl) {
       return {
@@ -23,28 +20,16 @@ angular.module('sidelinedApp')
     };
 
     $scope.signup = function() {
-      // Clear any previous security errors
-      $scope.authError = null;
-
-      // order matters
       security.signup(
+        // order matters
         $scope.user.username,
         $scope.user.password,
         $scope.user.passwordConfirmation,
         $scope.user.email
       ).then(function() {
-        $modalInstance.close();
+        AlertBroker.success('Please check your email for signup confirmation');
       }, function(err) {
-        $scope.authError = err;
+        AlertBroker.error(err);
       });
-    };
-
-    $scope.clear = function() {
-      $scope.user = {};
-    };
-
-    $scope.cancel = function() {
-      $modalInstance.dismiss('cancel');
-      security.doRedirect();
     };
   }]);
