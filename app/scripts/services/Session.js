@@ -15,23 +15,18 @@ angular.module('sidelinedApp')
           'Accept' : 'application/json',
           'Content-Type' : 'application/json'
         };
-        return $http.post('/api/signup', {
+        return $http.post('/api/users/sign_up', {
           user: {
             username: username,
             password: password,
-            passwordConfirmation: passwordConfirmation,
+            // only railsResource performs camelcase2underscore conversion
+            password_confirmation: passwordConfirmation,
             email: email
           }
         }).then(function(resp) {
-          if (resp.data.success) {
-            service.currentUser = resp.data.data.username;
-            return resp.data.data.username;
-          } else {
-            // reject promise with error message
-            return $q.reject(resp.data.info);
-          }
+          // nothing to do
         }, function(resp) {
-          return $q.reject(resp.data.info);
+          return $q.reject(resp.data);
         });
       },
 
@@ -41,7 +36,7 @@ angular.module('sidelinedApp')
           'Content-Type' : 'application/json'
         };
 
-        return $http.post('/api/login', {user: {login: email, password: password}})
+        return $http.post('/api/users/sign_in', {user: {login: email, password: password}})
           .then( function(resp) {
             if (resp.data.success) {
               service.currentUser = resp.data.data.username;
@@ -56,7 +51,7 @@ angular.module('sidelinedApp')
       },
       // logout the current user and redirect
       logout: function(redirectTo) {
-        $http.post('/api/logout').then(function() {
+        $http.post('/api/users/sign_out').then(function() {
           service.currentUser = null;
           redirect(redirectTo);
         });
@@ -66,9 +61,7 @@ angular.module('sidelinedApp')
       },
       // ask the backend to see if a user is already authenticated - this may be from a previous session.
       requestCurrentUser: function() {
-        if ( service.isAuthenticated() ) {
-          return $q.when(service.currentUser);
-        } else {
+        if ( !service.isAuthenticated() ) {
           return $http.get('/api/current-user').then(function(response) {
             service.currentUser = response.data.username;
             return service.currentUser;
