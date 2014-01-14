@@ -46,6 +46,12 @@ module.exports = function (grunt) {
     shell: {
       deploy: {
         command: 'scp -r dist/* do:/var/www/angular/'
+      },
+      capybara: {
+        command: 'pushd ~/git/sidelined-rails3; rspec -P spec/features/*_spec.rb; popd',
+        options: {
+          stdout: true
+        }
       }
     },
 
@@ -432,6 +438,8 @@ module.exports = function (grunt) {
     'build',
     'shell:deploy'
   ]);
+
+  grunt.registerTask('capybara', ['build', 'shell:capybara']);
 
   grunt.registerTask('build', [
     'clean:dist',
