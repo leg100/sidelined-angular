@@ -333,6 +333,7 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             'images/{,*/}*.{webp}',
             'fonts/*',
+            'bower_components/sass-bootstrap/fonts/*',
             '*.html'
           ]
         }, {
