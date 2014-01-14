@@ -6,12 +6,12 @@ form(novalidate name="form" class="login-form")
       div.alert.alert-error(ng-show="authError") {{authError}}
       div.alert.alert-info Please enter your login details
       .form-group(ng-class="{'has-error': form.email.$error.email}")
-        label E-mail
+        label(for="email") Email
         input.form-control(name="email" type="email" ng-model="user.email" required autofocus)
         span.help-inline(ng-show="form.email.$error.email") This is an invalid email.
       .form-group(ng-class="{'has-error': form.email.$error.email}")
-        label Password
-        input.form-control(type="password" ng-model="user.password" required)
+        label(for="password") Password
+        input.form-control(name="password" type="password" ng-model="user.password" required)
     div.modal-footer
       button.btn.btn-primary.login(ng-click="login()" ng-disabled='form.$invalid') Sign in
       button.btn.clear(ng-click="clear()") Clear
