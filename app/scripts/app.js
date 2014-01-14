@@ -38,8 +38,7 @@ angular.module('sidelinedApp', ['sidelinedApp.directives', 'sidelinedApp.injurie
     controller: 'SignupCtrl'
   })
   .state('confirmed', {
-    templateUrl: '/views/auth/signup.html',
-    url: '/confirmed',
+    url: '/confirmed?status',
     controller: ['AlertBroker', '$state', '$stateParams', function(AlertBroker, $state, $stateParams) {
       if ($stateParams.status == 'success') {
         AlertBroker.success('Successfully confirmed your signup');
@@ -47,7 +46,6 @@ angular.module('sidelinedApp', ['sidelinedApp.directives', 'sidelinedApp.injurie
       if ($stateParams.status == 'failure') {
         AlertBroker.error('There was an error confirming your signup');
       }
-      $state.go('injuries');
     }]
   })
   .state('error', {

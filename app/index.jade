@@ -30,7 +30,10 @@ html.no-js
             li.login(ng-hide="isAuthenticated()")
               form.navbar-form(ng-controller="LoginModalCtrl")
                 button.btn.login(ng-click="open()") Log in
-    .container(ng-view='')
+    .container
+      .row
+        .col-xs-8.alert-container(ng-controller="AlertCtrl")
+          alert(ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)") {{alert.msg}}
       .ui-view
     // build:js({.tmp,app}) /scripts/scripts.js
     script(src='/bower_components/jquery/jquery.js')
