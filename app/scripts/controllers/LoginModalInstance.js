@@ -3,8 +3,8 @@
 angular.module('sidelinedApp')
   .controller('LoginModalInstanceCtrl', ['$scope', '$modalInstance', 'Session', 'reason', function($scope, $modalInstance, security, reason) {
     $scope.user = {
-      email: 'louisgarman@gmail.com',
-      password: 'j843874q'
+      email: null,
+      password: null
     };
 
     $scope.authError = null;
