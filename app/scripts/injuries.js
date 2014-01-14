@@ -38,7 +38,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
         status: $scope.injury.status,
         source: $scope.injury.source,
         quote: $scope.injury.quote,
-        player: $scope.injury.player.id,
+        player_id: $scope.injury.player.id,
         returnDate: $scope.injury.returnDate
       }).create().then(function() {
         AlertBroker.success('Added new injury to '+ $scope.injury.player.tickerAndName);
