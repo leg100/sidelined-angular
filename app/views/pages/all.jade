@@ -7,7 +7,7 @@
           option(value="doubt" ng-selected="injury.status=='doubt'") Doubt
           option(value="recovered" ng-selected="injury.status=='recovered'") Recovered
       .form-group
-        input.form-control(name="player" autofocus type="text" ng-model="injury.player" typeahead="player as player.tickerAndName for player in getPlayers($viewValue)" placeholder="Player" ng-required="true" ng-disabled="disabled()")
+        input.form-control(id="player_typeahead" name="player" autofocus type="text" ng-model="injury.player" typeahead="player as player.tickerAndName for player in getPlayers($viewValue)" placeholder="Player" ng-required="true" ng-disabled="disabled()")
       .form-group
         input.form-control(type="text" datepicker-popup="{{format}}" ng-model="injury.returnDate" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" close-text="Close" placeholder="Return date")
       .form-group
