@@ -43,6 +43,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
       }).create().then(function() {
         AlertBroker.success('Added new injury to '+ $scope.injury.player.tickerAndName);
         InjuryListingService.broadcastItem();
+        $scope.injury = {};
       }, function(err) {
         AlertBroker.error(err.data);
       });
