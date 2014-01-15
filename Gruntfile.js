@@ -133,6 +133,7 @@ module.exports = function (grunt) {
               require('connect-modrewrite')([
                 '^/injuries(/.*)? / [L]',
                 '^/signup / [L]',
+                '^/help / [L]',
                 '^/confirmed(.*)? / [L]'
               ]),
               connect.static('.tmp'),

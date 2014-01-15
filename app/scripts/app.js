@@ -1,9 +1,11 @@
 'use strict';
 
-angular.module('sidelinedApp', ['sidelinedApp.directives', 'sidelinedApp.injuries', 'ui.router', 'rails', 'ui.bootstrap', 'http-auth-interceptor'])
+angular.module('sidelinedApp', ['sidelinedApp.directives', 'sidelinedApp.injuries', 'sidelinedApp.help', 'ui.router', 'rails', 'ui.bootstrap', 'http-auth-interceptor'])
 .config(['$locationProvider', '$stateProvider', '$urlRouterProvider', function($locationProvider, $stateProvider, $urlRouterProvider) {
+
   $locationProvider.html5Mode(true).hashPrefix('!');
   $urlRouterProvider.otherwise('/injuries');
+
   $stateProvider
   .state('injuries', {
     url: '/injuries{trailing:\/?}',
@@ -47,6 +49,11 @@ angular.module('sidelinedApp', ['sidelinedApp.directives', 'sidelinedApp.injurie
         AlertBroker.error('There was an error confirming your signup');
       }
     }]
+  })
+  .state('help', {
+    templateUrl: '/views/pages/help.html',
+    url: '/help',
+    controller: 'HelpCtrl'
   })
   .state('error', {
     template: '<h1>HTTP500</h1>',

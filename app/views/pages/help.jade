@@ -1,0 +1,11 @@
+.row
+  .col-xs-3.help-form-container
+    form#help-form(novalidate name="form")
+      .form-group
+        label.control-label(for="email") Email
+        input.form-control(name="email" type="email" ng-model="help.email" placeholder="Your email address" required)
+      .form-group
+        label.control-label(for="message") Message
+        textarea.form-control(name="message" rows="4" ng-model="help.message" placeholder="Enter message here." required)
+      .form-group
+        button.btn.btn-primary(ng-click="send()" ng-disabled="!canSend()") Send
