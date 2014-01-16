@@ -56,9 +56,27 @@ module.exports = function (grunt) {
     },
 
     jade: {
+      dev: {
+        options: {
+          pretty: true,
+          data: {
+            dev: true
+          }
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>',
+          dest: '.tmp',
+          src: '**/*.jade',
+          ext: '.html'
+        }]
+      },
       dist: {
         options: {
-          pretty: true
+          pretty: true,
+          data: {
+            dev: false
+          }
         },
         files: [{
           expand: true,
@@ -73,7 +91,7 @@ module.exports = function (grunt) {
     watch: {
       jade: {
         files: ['<%= yeoman.app %>/**/*.jade'],
-        tasks: ['jade']
+        tasks: ['jade:dev']
       },
       js: {
         files: ['{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js'],
@@ -96,7 +114,11 @@ module.exports = function (grunt) {
       },
       livereload: {
         options: {
-          livereload: '<%= connect.options.livereload %>'
+          livereload: {
+            port: 35729,
+            key: grunt.file.read('./node_modules/grunt-contrib-connect/tasks/certs/server.key'),
+            cert: grunt.file.read('./node_modules/grunt-contrib-connect/tasks/certs/server.crt')
+          }
         },
         files: [
           '.tmp/{,*}*.html',
@@ -115,9 +137,8 @@ module.exports = function (grunt) {
     connect: {
       options: {
         port: 9000,
-        // Change this to '0.0.0.0' to access the server from outside.
         hostname: 'localhost',
-        livereload: 35729
+        protocol: 'https'
       },
       livereload: {
         options: {
@@ -162,8 +183,8 @@ module.exports = function (grunt) {
         {
           context: '/api',
           host: 'sidelined.local',
-          port: 80,
-          https: false,
+          port: 443,
+          https: true,
           changeOrigin: false,
           xforward: false
         }
@@ -363,7 +384,7 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-        'jade',
+        'jade:dev',
         'compass:server',
         'copy:styles'
       ],
@@ -411,7 +432,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('serve', function (target) {
     if (target === 'dist') {
-      return grunt.task.run(['build', 'connect:dist:keepalive']);
+      return grunt.task.run(['build:dist', 'connect:dist:keepalive']);
     }
 
     grunt.task.run([
@@ -436,15 +457,31 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('deploy', [
-    'build',
+    'build:dist',
     'shell:deploy'
   ]);
 
-  grunt.registerTask('capybara', ['build', 'shell:capybara']);
+  grunt.registerTask('capybara', ['build:dev', 'shell:capybara']);
 
-  grunt.registerTask('build', [
+  grunt.registerTask('build:dist', [
     'clean:dist',
-    'jade',
+    'jade:dist',
+    'useminPrepare',
+    'concurrent:dist',
+    'autoprefixer',
+    'concat',
+    'ngmin',
+    'copy:dist',
+    'cdnify',
+    'cssmin',
+    'uglify',
+    'rev',
+    'usemin'
+  ]);
+
+  grunt.registerTask('build:dev', [
+    'clean:dist',
+    'jade:dev',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
@@ -461,6 +498,6 @@ module.exports = function (grunt) {
   grunt.registerTask('default', [
     'newer:jshint',
     'test',
-    'build'
+    'build:dev'
   ]);
 };

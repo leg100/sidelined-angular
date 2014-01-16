@@ -19,7 +19,7 @@
     "grunt-contrib-imagemin": "~0.3.0",
     "grunt-contrib-jshint": "~0.7.1",
     "grunt-contrib-uglify": "~0.2.0",
-    "grunt-contrib-watch": "~0.5.2",
+    "grunt-contrib-watch": "git://github.com/leg100/grunt-contrib-watch",
     "grunt-google-cdn": "~0.2.0",
     "grunt-newer": "~0.5.4",
     "grunt-ngmin": "~0.0.2",
@@ -43,11 +43,11 @@
     "karma": "~0.10.9",
     "karma-ng-html2js-preprocessor": "~0.1.0",
     "grunt-contrib-jade": "~0.9.1",
-    "grunt-connect-proxy": "~0.1.7",
     "connect-modrewrite": "~0.5.11",
     "karma-coverage": "~0.1.4",
     "grunt-open": "~0.2.2",
-    "grunt-shell": "~0.6.1"
+    "grunt-shell": "~0.6.1",
+    "grunt-connect-proxy": "git://github.com/leg100/grunt-connect-proxy"
   },
   "engines": {
     "node": ">=0.8.0"
