@@ -3,13 +3,13 @@
 angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.bootstrap', 'sidelinedApp.players'])
   .controller('InjuryAddCtrl', ['$scope', 'Player', 'Injury', 'InjuryListingService', 'AlertBroker', 'limitToFilter', '$filter', function($scope, Player, Injury, InjuryListingService, AlertBroker, limitToFilter, $filter) {
     // init params
-    $scope.injury = {
+    $scope.injury = new Injury({
       status: 'confirmed',
       player: null,
       source: null,
       quote: null,
       returnDate: null
-    };
+    });
 
     // datepicker
     $scope.dateOptions = {
@@ -34,13 +34,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
 
     // trigger add
     $scope.add = function() {
-      new Injury({
-        status: $scope.injury.status,
-        source: $scope.injury.source,
-        quote: $scope.injury.quote,
-        player_id: $scope.injury.player.id,
-        returnDate: $scope.injury.returnDate
-      }).create().then(function() {
+      $scope.injury.create().then(function() {
         AlertBroker.success('Added new injury to '+ $scope.injury.player.tickerAndName);
         InjuryListingService.broadcastItem();
         $scope.injury = {};
