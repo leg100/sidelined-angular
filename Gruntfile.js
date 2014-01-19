@@ -47,6 +47,18 @@ module.exports = function (grunt) {
       deploy: {
         command: 'scp -r dist/* do:/var/www/angular/'
       },
+      copy_to_staging: {
+        command: 'rsync -av --delete dist/* staging/',
+        options: {
+          stdout: true
+        }
+      },
+      copy_to_integration: {
+        command: 'rsync -av --delete dist/* integration/',
+        options: {
+          stdout: true
+        }
+      },
       capybara: {
         command: 'pushd ~/git/sidelined-rails3; rspec -P spec/features/*_spec.rb; popd',
         options: {
@@ -56,35 +68,53 @@ module.exports = function (grunt) {
     },
 
     jade: {
-      dev: {
-        options: {
-          pretty: true,
-          data: {
-            dev: true
-          }
-        },
+      dist: { 
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>',
           dest: '.tmp',
           src: '**/*.jade',
           ext: '.html'
-        }]
+        }],
+        options: {
+          pretty: true,
+          data: {
+            dev: false,
+            integration: false
+          }
+        }
       },
-      dist: {
-        options: {
-          pretty: true,
-          data: {
-            dev: false
-          }
-        },
+      integration: { 
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>',
           dest: '.tmp',
           src: '**/*.jade',
           ext: '.html'
-        }]
+        }],
+        options: {
+          pretty: true,
+          data: {
+            dev: false,
+            integration: true
+          }
+        }
+      },
+      dev: { 
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>',
+          dest: '.tmp',
+          src: '**/*.jade',
+          ext: '.html'
+        }],
+        options: {
+          pretty: true,
+          data: {
+            dev: true,
+            integration: false
+          }
+        }
       }
     },
     // Watches files for changes and runs tasks based on the changed files
@@ -264,11 +294,13 @@ module.exports = function (grunt) {
       },
       dist: {
         options: {
-          generatedImagesDir: '<%= yeoman.dist %>/images/generated'
+          generatedImagesDir: '<%= yeoman.dist %>/images/generated',
+          environment: 'production'
         }
       },
       server: {
         options: {
+          environment: 'development',
           debugInfo: true
         }
       }
@@ -461,11 +493,16 @@ module.exports = function (grunt) {
     'shell:deploy'
   ]);
 
-  grunt.registerTask('capybara', ['build:dev', 'shell:capybara']);
+  grunt.registerTask('capybara', ['build:integration', 'shell:capybara']);
+
+  grunt.registerTask('build:staging', [
+    'build:dist',
+    'shell:copy_to_staging'
+  ]);
 
   grunt.registerTask('build:dist', [
     'clean:dist',
-    'jade:dist',
+    'jade',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
@@ -477,6 +514,23 @@ module.exports = function (grunt) {
     'uglify',
     'rev',
     'usemin'
+  ]);
+
+  grunt.registerTask('build:integration', [
+    'clean:dist',
+    'jade:integration',
+    'useminPrepare',
+    'concurrent:dist',
+    'autoprefixer',
+    'concat',
+    'ngmin',
+    'copy:dist',
+    'cdnify',
+    'cssmin',
+    'uglify',
+    'rev',
+    'usemin',
+    'shell:copy_to_integration'
   ]);
 
   grunt.registerTask('build:dev', [

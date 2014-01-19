@@ -92,10 +92,14 @@ body {
 
 
 /* My stuff */
-* {
-  box-sizing: border-box;
-  outline: 1px solid #000;
+
+@if compass-env() == 'development' {
+  * {
+    box-sizing: border-box;
+    outline: 1px solid #000;
+  }
 }
+
 .logo {
   color: red;
   font-family: 'Oswald', sans-serif;
