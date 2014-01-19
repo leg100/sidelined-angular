@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('sidelinedApp')
+angular.module('sidelinedApp.auth', [])
   .factory('Session', ['$http', '$q', '$location', function($http, $q, $location) {
 
     function redirect(url) {
