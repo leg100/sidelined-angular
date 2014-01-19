@@ -135,11 +135,18 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
       });
     };
   }])  
-  .factory('Injury', ['railsResourceFactory', function(railsResourceFactory) {
+  .factory('Injury', ['railsResourceFactory', 'railsSerializer', function(railsResourceFactory, railsSerializer) {
     return railsResourceFactory({
       url: '/api/injuries',
       name: 'injury',
       pluralName: 'injuries',
+      serializer: railsSerializer(function() {
+        this.add('player_id', function(injury) {
+          return injury.player.id;
+        });
+        this.exclude('player');
+        this.exclude('revisions');
+      }),
       responseInterceptors: [function(promise) {
         return promise.then(function(response) {
           if (response.originalData.meta) {
