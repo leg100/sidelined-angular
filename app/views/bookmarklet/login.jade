@@ -1,0 +1,11 @@
+form(novalidate name="form" class="login-form" ng-controller="LoginFormController")
+  div.alert.alert-info Please enter your login details
+  .form-group(ng-class="getClass(form.email)")
+    label(for="email") Email
+    input.form-control(name="email" type="email" ng-model="user.email" required autofocus)
+    span.help-block(ng-show="showError(form.email,'required')") Email is required.
+    span.help-block(ng-show="showError(form.email,'email')") Not a valid email.
+  .form-group
+    label(for="password") Password
+    input.form-control(name="password" type="password" ng-model="user.password" required)
+  button.btn.btn-primary.login(ng-click="login()" ng-disabled='form.$invalid') Sign in

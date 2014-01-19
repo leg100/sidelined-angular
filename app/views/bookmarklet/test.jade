@@ -1,0 +1,9 @@
+html
+  head
+    title Test Site
+  body
+    h1 test site
+  script(type="text/javascript").
+    var js = document.createElement('script');    
+    js.setAttribute('src', 'https://localhost:9000/scripts/bookmarklet.js');    
+    document.body.appendChild(js);  
