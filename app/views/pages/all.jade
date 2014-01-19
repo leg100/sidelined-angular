@@ -9,6 +9,8 @@
       .form-group
         input.form-control(id="player_typeahead" name="player" autofocus type="text" ng-model="injury.player" typeahead="player as player.tickerAndName for player in getPlayers($viewValue)" placeholder="Player" ng-required="true" ng-disabled="disabled()")
       .form-group
+        input.form-control(id="player_body_part" type="text" ng-model="injury.bodyPart" placeholder="Body part")
+      .form-group
         input.form-control(type="text" datepicker-popup="{{format}}" ng-model="injury.returnDate" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" close-text="Close" placeholder="Return date")
       .form-group
         textarea.form-control(rows="3" ng-model="injury.quote" placeholder="Quote")

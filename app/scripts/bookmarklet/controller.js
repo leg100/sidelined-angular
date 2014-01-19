@@ -71,6 +71,7 @@ angular.module('bookmarkletApp')
       player: null,
       source: $scope.URL,
       quote: null,
+      bodyPart: null,
       returnDate: null
     });
 
@@ -101,7 +102,6 @@ angular.module('bookmarkletApp')
       Injury.$get('/api/injuries/current', {player_id: $scope.injury.player.id})
         .then(function(resp) {
           // existing injury
-          console.log(resp);
           AlertBroker.success('found current injury');
           $scope.injury = resp;
           $scope.isNew = false;

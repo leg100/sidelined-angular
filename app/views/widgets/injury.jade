@@ -22,7 +22,7 @@
               span.status 
                 | {{injury.status|capitalize}}
             span.h4.out
-              i.small Out for 9 more days
+              i.small {{injury.bodyPart}}
           .col-xs-2.text-right.h4.ago
             small 
               | {{injury.updatedAt|ago}}

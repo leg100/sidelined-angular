@@ -9,6 +9,8 @@
       .form-group
         input.form-control(type="text" datepicker-popup="{{format}}" ng-model="injury.returnDate" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" close-text="Close" placeholder="Return date")
       .form-group
+        input.form-control(type="text" ng-model="injury.bodyPart" placeholder="Body part")
+      .form-group
         textarea.form-control(rows="3" ng-model="injury.quote" placeholder="Quote")
       .form-group
         input.form-control(type="text" ng-model="injury.source" placeholder="News source")
@@ -25,6 +27,9 @@
           dt Player 
           dd 
             | {{injury.player.longName}}
+          dt Body part
+          dd 
+            | {{injury.bodyPart}}
           dt Return date 
           dd 
             | {{injury.returnDate|date:'dd-MMMM-yyyy'||'Unknown'}}
