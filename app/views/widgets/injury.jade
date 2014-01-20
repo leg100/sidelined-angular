@@ -17,12 +17,12 @@
       .col-xs-10.col-xs-offset-2.event
         .row
           .col-xs-10
-            span.h4.injury 
-              span Injury:
-              span.status 
+            a(ng-href="/injuries/{{injury.id}}")
+              span.h4.injury
                 | {{injury.status|capitalize}}
-            span.h4.out
-              i.small {{injury.bodyPart}}
+              span.h4.out
+                small
+                  | {{injury.bodyPart}}
           .col-xs-2.text-right.h4.ago
             small 
               | {{injury.updatedAt|ago}}
