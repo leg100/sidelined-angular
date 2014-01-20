@@ -4,7 +4,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
   .controller('InjuryAddCtrl', ['$scope', 'Player', 'Injury', 'InjuryListingService', 'AlertBroker', 'limitToFilter', '$filter', function($scope, Player, Injury, InjuryListingService, AlertBroker, limitToFilter, $filter) {
     // init params
     $scope.injury = new Injury({
-      status: 'confirmed',
+      status: 'injured',
       player: null,
       source: null,
       quote: null,
