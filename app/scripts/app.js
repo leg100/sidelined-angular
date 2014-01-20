@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('sidelinedApp', ['sidelinedApp.directives', 'sidelinedApp.injuries', 'sidelinedApp.auth', 'sidelinedApp.help', 'ui.router', 'rails', 'ui.bootstrap', 'http-auth-interceptor'])
-.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', function($locationProvider, $stateProvider, $urlRouterProvider) {
+  .config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$uiViewScrollProvider', function($locationProvider, $stateProvider, $urlRouterProvider, $uiViewScrollProvider) {
 
   $locationProvider.html5Mode(true).hashPrefix('!');
   $urlRouterProvider.otherwise('/injuries');
+    $uiViewScrollProvider.useAnchorScroll();
 
   $stateProvider
   .state('injuries', {
