@@ -1,16 +1,8 @@
 html
   head
+    // build:css({.tmp,app}) /styles/bookmarklet.css
     link(rel='stylesheet', href='/styles/bookmarklet.css')
-    script(src='/bower_components/angular/angular.js')
-    script(src='/bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
-    script(src='/bower_components/angular-http-auth/src/http-auth-interceptor.js')
-    script(src='/bower_components/angularjs-rails-resource/angularjs-rails-resource.js')
-    script(src='/scripts/bookmarklet/init.js')
-    script(src='/scripts/bookmarklet/controller.js')
-    script(src='/scripts/services/Session.js')
-    script(src='/scripts/injuries.js')
-    script(src='/scripts/players.js')
-    script(src='/scripts/alerts.js')
+    // endbuild
   body(ng-app="bookmarkletApp" ng-controller="BookmarkletController")
     .row
       .col-xs-12(ng-controller="LoginStatusController")
@@ -29,4 +21,15 @@ html
     .row
       .col-xs-12
         ng-include(src='showLogin && "/views/bookmarklet/login.html" || "/views/bookmarklet/form.html"')
-
+    // build:js({.tmp,app}) /scripts/bookmarklet_app.js
+    script(src='/bower_components/angular/angular.js')
+    script(src='/bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
+    script(src='/bower_components/angular-http-auth/src/http-auth-interceptor.js')
+    script(src='/bower_components/angularjs-rails-resource/angularjs-rails-resource.js')
+    script(src='/scripts/bookmarklet/init.js')
+    script(src='/scripts/bookmarklet/controller.js')
+    script(src='/scripts/services/Session.js')
+    script(src='/scripts/injuries.js')
+    script(src='/scripts/players.js')
+    script(src='/scripts/alerts.js')
+    // endbuild

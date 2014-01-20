@@ -152,7 +152,7 @@ module.exports = function (grunt) {
         },
         files: [
           '.tmp/{,*}*.html',
-          '<%= yeoman.app %>/{,*/}*.html',
+          '<%= yeoman.app %>/**/*.html',
           '.tmp/styles/{,*/}*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
@@ -324,7 +324,7 @@ module.exports = function (grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      html: '.tmp/index.html',
+      html: ['.tmp/index.html', '.tmp/views/bookmarklet/iframe.html'],
       options: {
         dest: '<%= yeoman.dist %>'
       }
@@ -332,7 +332,7 @@ module.exports = function (grunt) {
 
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
-      html: ['<%= yeoman.dist %>/{,*/}*.html'],
+      html: ['<%= yeoman.dist %>/**/*.html'],
       css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
       options: {
         assetsDirs: ['<%= yeoman.dist %>']
@@ -393,6 +393,7 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             'images/{,*/}*.{webp}',
             'fonts/*',
+            'bookmarklet.js',
             'bower_components/sass-bootstrap/fonts/*',
             '*.html'
           ]
