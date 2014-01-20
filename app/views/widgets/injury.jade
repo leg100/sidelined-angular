@@ -27,10 +27,8 @@
             small 
               | {{injury.updatedAt|ago}}
         .row.quote
-          span
-            | {{injury.quote}}
-          span.detail-link
-            a(ui-sref="injury({id: injury.id})") Detail
+          a.span(ng-href="{{injury.source}}")
+            | {{injury.quote || injury.source|domain}}
         .row
           .col-xs-5.col-xs-push-7.text-right
             span.h5.small Posted by {{injury.modifier.username}}
