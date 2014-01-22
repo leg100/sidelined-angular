@@ -93,6 +93,8 @@ body {
 
 /* My stuff */
 
+@import 'alerts';
+
 @if compass-env() == 'development' {
   * {
     box-sizing: border-box;
@@ -111,10 +113,6 @@ body {
 }
 .container {
   width: 980px !important;
-}
-.alert {
-  margin-bottom: 10px;
-  padding: 3px;
 }
 .pagination {
   margin-left: 43px;
