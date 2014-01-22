@@ -38,7 +38,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
           AlertBroker.success('found no current injuries');
           $scope.isNew = true;
           var reset_injury = Injury.new_with_defaults({player: $scope.injury.player});
-          if (isBookmarklet) reset_injury.source = $scope.injury.source;
+          if ($scope.isBookmarklet) reset_injury.source = $scope.injury.source;
           $scope.injury = reset_injury;
         });
     };
