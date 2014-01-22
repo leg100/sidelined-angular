@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('bookmarkletApp')
-  .controller('BookmarkletController', ['$scope', 'Player', 'limitToFilter', '$filter', 'AlertBroker', 'Injury', function($scope, Player, limitToFilter, $filter, AlertBroker, Injury) {
+  .controller('BookmarkletController', ['$scope', 'Player', 'limitToFilter', '$filter', 'AlertBroker', 'Injury', '$state', function($scope, Player, limitToFilter, $filter, AlertBroker, Injury, $state) {
     $scope.close = function() {
       window.parent.closeSidelinedIFrame();
     }
