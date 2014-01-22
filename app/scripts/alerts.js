@@ -16,15 +16,12 @@ angular.module('sidelinedApp.alerts', [])
         msg: AlertBroker.message,
         type: type
       });
+      $timeout(closeLastAlert, 5000);
     }
 
     function closeAllAlerts() {
       $scope.alerts = [];
     }
-
-    $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-      closeAllAlerts();
-    });
 
     $scope.$on('alert-success', function() {
       createAlert('success');
