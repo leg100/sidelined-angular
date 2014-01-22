@@ -162,7 +162,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
         returnDate: null
       }
       if (override) angular.extend(defaults, override);
-      return defaults;
+      return new this(defaults);
     };
 
     return factory;
