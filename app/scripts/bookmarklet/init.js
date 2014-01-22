@@ -1,6 +1,39 @@
+angular.module('bookmarkletApp', ['sidelinedApp.filters', 'ui.router', 'ui.bootstrap', 'sidelinedApp.injuries', 'sidelinedApp.players', 'sidelinedApp.alerts', 'http-auth-interceptor', 'sidelinedApp.auth', 'ui.bootstrap'])
+  .config(['$locationProvider', '$stateProvider', '$urlRouterProvider', function($locationProvider, $stateProvider, $urlRouterProvider) {
 
-angular.module('bookmarkletApp', ['ui.bootstrap', 'sidelinedApp.injuries', 'sidelinedApp.players', 'sidelinedApp.alerts', 'http-auth-interceptor', 'sidelinedApp.auth'])
+    $urlRouterProvider.otherwise('/');
+
+    $stateProvider
+    .state('bookmarklet', {
+      url: '/',
+      templateUrl: '/views/forms/injury.html',
+      controller: 'InjuryFormCtrl',
+      resolve: {
+        injury: ['Injury', function(Injury) {
+          var url = (window.location != window.parent.location) ? document.referrer: document.location;
+          return Injury.new_with_defaults({source: url});
+        }]
+      }
+    })
+    .state('injury-show', {
+      url: '/injuries/:id',
+      templateUrl: '/views/bookmarklet/show.html',
+      controller: 'InjuryShowCtrl',
+      resolve: {
+        injury: ['Injury', '$stateParams', function(Injury, $stateParams) {
+          return Injury.get($stateParams.id);
+        }]
+      }
+    })
+    .state('login', {
+      templateUrl: '/views/bookmarklet/login.html',
+      controller: 'LoginFormController'
+    })
+    .state('error', {
+      template: '<h1>HTTP500</h1>',
+      url: '/error'
+    });
+  }])
   .run(['$rootScope', 'Session', function ($rootScope, Session) {
-    $rootScope.URL = (window.location != window.parent.location) ? document.referrer: document.location;
     Session.requestCurrentUser();
   }]);

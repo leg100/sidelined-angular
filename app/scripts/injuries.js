@@ -31,13 +31,12 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
         .then(function(resp) {
           // existing injury
           AlertBroker.success('found current injury');
-          $scope.injury = resp;
+          $scope.injury = angular.extend(resp, $scope.injury);
           $scope.isNew = false;
         }, function() {
           AlertBroker.success('found no current injuries');
           $scope.isNew = true;
           $scope.injury = Injury.new_with_defaults({player: $scope.injury.player});
-          console.log($scope.injury);
         });
     };
 
@@ -119,7 +118,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
         AlertBroker.error(err.data.info);
       });
     };
-  }])  
+  }])
   .factory('Injury', ['railsResourceFactory', 'railsSerializer', function(railsResourceFactory, railsSerializer) {
     var factory = railsResourceFactory({
       url: '/api/injuries',

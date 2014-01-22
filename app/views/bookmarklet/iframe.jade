@@ -12,7 +12,7 @@ html
           li.logout(ng-show="isAuthenticated()")
             a.logout(ng-click="logout()") Log out
           li(ng-hide="isAuthenticated() || showLogin")
-            a(ng-click="toggleShowLogin()") Log in
+            a(ui-sref='login') Log in
           li.text-right.pull-right
             a.span.glyphicon.glyphicon-remove.text-right(ng-click="close()")
     .row
@@ -20,9 +20,10 @@ html
         alert(ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)") {{alert.msg}}
     .row
       .col-xs-12
-        ng-include(src='showLogin && "/views/bookmarklet/login.html" || "/views/bookmarklet/form.html"')
+        .ui-view
     // build:js({.tmp,app}) /scripts/bookmarklet_app.js
     script(src='/bower_components/angular/angular.js')
+    script(src='/bower_components/angular-ui-router/release/angular-ui-router.js')
     script(src='/bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
     script(src='/bower_components/angular-http-auth/src/http-auth-interceptor.js')
     script(src='/bower_components/angularjs-rails-resource/angularjs-rails-resource.js')
