@@ -44,12 +44,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
     // trigger add
     $scope.add = function() {
       $scope.injury.create().then(function(resp) {
-        $state.go('injury-show', { id: resp.id, 
-          alerts: {
-            type: 'success',
-            msg: 'Added new injury to '+ $scope.injury.player.tickerAndName
-          }
-        });
+        $state.go('injury-show', { id: resp.id });
       }, function(err) {
         AlertBroker.error(err.data);
       });
