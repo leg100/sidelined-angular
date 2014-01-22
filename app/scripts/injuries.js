@@ -4,6 +4,8 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
   .controller('InjuryFormCtrl', ['$scope', 'Player', 'Injury', 'injury', 'AlertBroker', 'limitToFilter', '$filter', '$state', function($scope, Player, Injury, injury, AlertBroker, limitToFilter, $filter, $state) {
 
     $scope.injury = injury;
+    $scope.isNew = $state.current.data.isNew;
+    $scope.isBookmarklet = $state.current.data.isBookmarklet;
     // datepicker
     $scope.dateOptions = {
       'year-format': 'yy',
@@ -25,7 +27,6 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
       });
     };
 
-    $scope.isNew = true;
     $scope.findExistingInjury = function() {
       Injury.$get('/api/injuries/current', {player_id: $scope.injury.player.id})
         .then(function(resp) {
@@ -36,7 +37,9 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
         }, function() {
           AlertBroker.success('found no current injuries');
           $scope.isNew = true;
-          $scope.injury = Injury.new_with_defaults({player: $scope.injury.player});
+          var reset_injury = Injury.new_with_defaults({player: $scope.injury.player});
+          if (isBookmarklet) reset_injury.source = $scope.injury.source;
+          $scope.injury = reset_injury;
         });
     };
 

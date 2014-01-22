@@ -12,6 +12,9 @@ angular.module('sidelinedApp', ['sidelinedApp.filters', 'sidelinedApp.directives
       url: '/injuries/new',
       templateUrl: '/views/forms/injury.html',
       controller: 'InjuryFormCtrl',
+      data: {
+        isNew: false
+      },
       resolve: {
         injury: ['Injury', function(Injury) {
           return Injury.new_with_defaults();
@@ -22,6 +25,9 @@ angular.module('sidelinedApp', ['sidelinedApp.filters', 'sidelinedApp.directives
       url: '/injuries/:id/update',
       templateUrl: '/views/forms/injury.html',
       controller: 'InjuryFormCtrl',
+      data: {
+        isNew: false
+      },
       resolve: {
         injury: ['Injury', '$stateParams', function(Injury, $stateParams) {
           return Injury.get($stateParams.id);

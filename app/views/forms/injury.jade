@@ -14,7 +14,7 @@ div.form-container
     .form-group
       textarea.form-control(rows="3" ng-model="injury.quote" placeholder="Quote")
     .form-group
-      input.form-control(type="text" ng-model="injury.source" placeholder="News source")
+      input.form-control(type="text" ng-model="injury.source" placeholder="News source" ng-disabled="isBookmarklet")
     .form-group
     button.btn.btn-primary(ng-show="isNew" ng-click="add()" ng-disabled="form.$invalid") Add
     button.btn.btn-primary(ng-show="!isNew" ng-click="update()" ng-disabled="form.$invalid") Update

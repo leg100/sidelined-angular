@@ -8,6 +8,10 @@ angular.module('bookmarkletApp', ['sidelinedApp.filters', 'ui.router', 'ui.boots
       url: '/',
       templateUrl: '/views/forms/injury.html',
       controller: 'InjuryFormCtrl',
+      data: {
+        isNew: true,
+        isBookmarklet: true
+      },
       resolve: {
         injury: ['Injury', function(Injury) {
           var url = (window.location != window.parent.location) ? document.referrer: document.location;
