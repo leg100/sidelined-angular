@@ -1,21 +1,4 @@
 .row
-  .col-xs-3.injury-form-container
-    form(novalidate name="form" ng-controller="InjuryEditCtrl")
-      .form-group
-        select.form-control(ng-model="injury.status" required)
-          option(value="injured" ng-selected="injury.status=='injured'") Injured
-          option(value="doubtful" ng-selected="injury.status=='doubtful'") Doubtful
-          option(value="recovered" ng-selected="injury.status=='recovered'") Recovered
-      .form-group
-        input.form-control(type="text" datepicker-popup="{{format}}" ng-model="injury.returnDate" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" close-text="Close" placeholder="Return date")
-      .form-group
-        input.form-control(type="text" ng-model="injury.bodyPart" placeholder="Body part")
-      .form-group
-        textarea.form-control(rows="3" ng-model="injury.quote" placeholder="Quote")
-      .form-group
-        input.form-control(type="text" ng-model="injury.source" placeholder="News source")
-      .form-group
-        button.btn.btn-default(ng-click="update()" ng-disabled="!canUpdate()") Update {{type}}
   .col-xs-9.injury-container
     .row
       .col-xs-12

@@ -1,16 +1,9 @@
 'use strict';
 
 angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.bootstrap', 'sidelinedApp.players'])
-  .controller('InjuryAddCtrl', ['$scope', 'Player', 'Injury', 'InjuryListingService', 'AlertBroker', 'limitToFilter', '$filter', function($scope, Player, Injury, InjuryListingService, AlertBroker, limitToFilter, $filter) {
-    // init params
-    $scope.injury = new Injury({
-      status: 'injured',
-      player: null,
-      source: null,
-      quote: null,
-      returnDate: null
-    });
+  .controller('InjuryFormCtrl', ['$scope', 'Player', 'Injury', 'injury', 'AlertBroker', 'limitToFilter', '$filter', '$state', function($scope, Player, Injury, injury, AlertBroker, limitToFilter, $filter, $state) {
 
+    $scope.injury = injury;
     // datepicker
     $scope.dateOptions = {
       'year-format': 'yy',
@@ -32,12 +25,40 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
       });
     };
 
+    $scope.isNew = true;
+    $scope.findExistingInjury = function() {
+      Injury.$get('/api/injuries/current', {player_id: $scope.injury.player.id})
+        .then(function(resp) {
+          // existing injury
+          AlertBroker.success('found current injury');
+          $scope.injury = resp;
+          $scope.isNew = false;
+        }, function() {
+          AlertBroker.success('found no current injuries');
+          $scope.isNew = true;
+          $scope.injury = Injury.new_with_defaults({player: $scope.injury.player});
+          console.log($scope.injury);
+        });
+    };
+
     // trigger add
     $scope.add = function() {
-      $scope.injury.create().then(function() {
-        AlertBroker.success('Added new injury to '+ $scope.injury.player.tickerAndName);
-        InjuryListingService.broadcastItem();
-        $scope.injury = {};
+      $scope.injury.create().then(function(resp) {
+        $state.go('injury-show', { id: resp.id, 
+          alerts: {
+            type: 'success',
+            msg: 'Added new injury to '+ $scope.injury.player.tickerAndName
+          }
+        });
+      }, function(err) {
+        AlertBroker.error(err.data);
+      });
+    };
+
+    $scope.update = function() {
+      $scope.injury.update().then(function(resp) {
+        AlertBroker.success('Updated injury '+ resp.id);
+        $state.go('injury-show', {id: resp.id});
       }, function(err) {
         AlertBroker.error(err.data);
       });
@@ -46,43 +67,15 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
     $scope.canSave = function() {
       return $scope.form.$dirty && $scope.form.$valid;
     };
+
   }])
-  .controller('InjuryEditCtrl', ['$scope', 'Injury', 'AlertBroker', '$state', function($scope, Injury, AlertBroker, $state) {
-
-    // datepicker
-    $scope.dateOptions = {
-      'year-format': 'yy',
-      'starting-day': 1
-    };
-    $scope.today = function() {
-      $scope.minDate = new Date();
-    };
-    $scope.today();
-    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'];
-    $scope.format = $scope.formats[0];
-
-    $scope.canUpdate = function() {
-      return $scope.form.$dirty && $scope.form.$valid;
-    };
-
-    $scope.update = function() {
-      $scope.injury.update().then(function(resp) {
-        AlertBroker.success('Updated injury '+ resp.id);
-        // re retrieve injury
-        $state.reload();
-      }, function(err) {
-        AlertBroker.error(err.data);
-      });
-    };
-  }])
-  .controller('InjuryListCtrl', ['$scope', 'Injury', 'InjuryListingService', 'AlertBroker', 'injuries', '$location', 'action', function($scope, Injury, InjuryListingService, AlertBroker, injuries, $location, action) {
-    $scope.itemsPerPage = 100;
+  .controller('InjuryListCtrl', ['$scope', 'Injury', 'InjuryListingService', 'AlertBroker', 'injuries', '$location', '$state', '$stateParams', function($scope, Injury, InjuryListingService, AlertBroker, injuries, $location, $state, $stateParams) {
+    $scope.itemsPerPage = 10;
     $scope.format = 'dd-MMMM-yyyy';
     $scope.injuries = injuries;
-    $scope.currentPage = 1; //$routeParams.page || 1;
+    $scope.page = $stateParams.page || 1;
     $scope.totalItems = injuries.$total;
     $scope.maxSize = 10;
-    $scope.action = action;
 
     $scope.$on('handleBroadcast', function() {
       Injury.query({page: 1, _type: 'Injury'})
@@ -90,6 +83,11 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
         $scope.injuries = resp;
       });
     });
+
+    $scope.updateInjury = function(index) {
+      var injury = $scope.injuries[index];
+      $state.go('injury-show', { id: injury.id });
+    };
 
     $scope.removeInjury = function(index) {
       var injury = $scope.injuries[index];
@@ -104,11 +102,10 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
     };
 
     $scope.goToPage = function(page) {
-      $location.path('/all/'+ page);
+      $state.go('injuries-by-page', {page: page})
     };
   }])
-  .controller('InjuryShowCtrl', ['$scope', '$state', 'action', 'Injury', 'AlertBroker', function($scope, $state, action, Injury, AlertBroker) {
-    $scope.action = action;
+  .controller('InjuryShowCtrl', ['$scope', '$state', 'Injury', 'AlertBroker', function($scope, $state, Injury, AlertBroker) {
     $scope.$state = $state;
     $scope.$watch('$state.$current.locals.globals.injury', function(injury) {
       $scope.injury = injury;
@@ -121,7 +118,6 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
       Injury.$post('/api/injuries/'+$scope.injury.id+'/revert', {
         version: version
       }).then(function(resp) {
-        console.log(resp);
         $scope.injury = resp;
         AlertBroker.success("updated injury to version "+$scope.injury.version);
       }, function(err) {
@@ -130,7 +126,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
     };
   }])  
   .factory('Injury', ['railsResourceFactory', 'railsSerializer', function(railsResourceFactory, railsSerializer) {
-    return railsResourceFactory({
+    var factory = railsResourceFactory({
       url: '/api/injuries',
       name: 'injury',
       pluralName: 'injuries',
@@ -141,16 +137,36 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
         this.exclude('player');
         this.exclude('revisions');
       }),
-      responseInterceptors: [function(promise) {
-        return promise.then(function(response) {
-          if (response.originalData.meta) {
-            response.data.$total = response.originalData.meta.total;
+      interceptors: [{
+        'beforeResponse': function(response) {
+          if (response.data.meta && response.data.meta.total) {
+            response.$total = response.data.meta.total;
           }
           return response;
-        });
+        },
+        'response': function(response) {
+          if (response.$total) {
+            response.data.$total = response.$total;
+          }
+          return response;
+        }
       }]
     });
-  }])
+
+    factory.new_with_defaults = function(override) {
+      var defaults = {
+        status: 'injured',
+        player: null,
+        source: null,
+        quote: null,
+        returnDate: null
+      }
+      if (override) angular.extend(defaults, override);
+      return defaults;
+    };
+
+    return factory;
+}])
   .factory('InjuryListingService', ['$rootScope', function($rootScope) {
     var injuryListingService = {};
     injuryListingService.broadcastItem = function() {

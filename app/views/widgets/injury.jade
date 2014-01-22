@@ -32,5 +32,4 @@
         .row
           .col-xs-5.col-xs-push-7.text-right
             span.h5.small Posted by {{injury.modifier.username}}
-            button.btn.btn-primary.btn-xs.micro-button(ng-click="updateInjury()") Update
-            button.btn.btn-xs.btn-danger.micro-button(ng-click="removeInjury($index)") Delete
+            a.button.btn.btn-primary.btn-xs.micro-button(ng-href="/injuries/{{injury.id}}/update") Update

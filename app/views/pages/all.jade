@@ -1,26 +1,7 @@
 .row
-  .col-xs-3.injuries-form-container
-    form(novalidate name="form" ng-controller="InjuryAddCtrl")
-      .form-group
-        select.form-control(ng-model="injury.status" required)
-          option(value="injured" ng-selected="injury.status=='injured'") Injured
-          option(value="doubtful" ng-selected="injury.status=='doubtful'") Doubtful
-          option(value="recovered" ng-selected="injury.status=='recovered'") Recovered
-      .form-group
-        input.form-control(id="player_typeahead" name="player" autofocus type="text" ng-model="injury.player" typeahead="player as player.tickerAndName for player in getPlayers($viewValue)" placeholder="Player" ng-required="true" ng-disabled="disabled()")
-      .form-group
-        input.form-control(id="player_body_part" type="text" ng-model="injury.bodyPart" placeholder="Body part")
-      .form-group
-        input.form-control(type="text" datepicker-popup="{{format}}" ng-model="injury.returnDate" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" close-text="Close" placeholder="Return date")
-      .form-group
-        textarea.form-control(rows="3" ng-model="injury.quote" placeholder="Quote")
-      .form-group
-        input.form-control(type="text" ng-model="injury.source" placeholder="News source")
-      .form-group
-        button.btn.btn-primary(ng-click="add()" ng-disabled="!canSave()") Add {{type}}
   .col-xs-9.injuries-container
     .row
       div(ng-repeat="injury in injuries")
         ng-include(src="injury.templateUrl")
     .row
-      pagination(total-items="totalItems" page="currentPage" max-size="maxSize" on-select-page="goToPage(page)" items-per-page="itemsPerPage")
+      pagination(total-items="totalItems" page="page" max-size="maxSize" on-select-page="goToPage(page)" items-per-page="itemsPerPage")

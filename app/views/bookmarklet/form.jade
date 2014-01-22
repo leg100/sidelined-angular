@@ -1,7 +1,7 @@
 h4 Add injury
 form(novalidate name="form" ng-controller="InjuryController")
   .form-group
-    input.form-control(id="player_typeahead" name="player" autofocus type="text" ng-model="injury.player" typeahead="player as player.tickerAndName for player in getPlayers($viewValue)" placeholder="Player" ng-required="true" ng-disabled="disabled()" typeahead-on-select="findExistingInjury()")
+    input.form-control(id="player_typeahead" name="player" type="text" ng-model="injury.player" typeahead="player as player.tickerAndName for player in getPlayers($viewValue)" placeholder="Player" ng-required="true" ng-disabled="disabled()" typeahead-on-select="findExistingInjury()")
   .form-group
     select.form-control(ng-model="injury.status" required)
       option(value="injured" ng-selected="injury.status=='injured'") Injured
