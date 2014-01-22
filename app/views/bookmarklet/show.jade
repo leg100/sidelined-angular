@@ -1,0 +1,30 @@
+.row
+  .col-xs-9.injury-container
+    .row
+      .col-xs-12
+        h3 Injury
+        dl.dl-horizontal
+          dt Status 
+          dd 
+            | {{injury.status|capitalize}}
+          dt Player 
+          dd 
+            | {{injury.player.longName}}
+          dt Body part
+          dd 
+            | {{injury.bodyPart}}
+          dt Return date 
+          dd 
+            | {{injury.returnDate|date:'dd-MMMM-yyyy'||'Unknown'}}
+          dt Quote
+          dd 
+            | {{injury.quote}}
+          dt Source
+          dd 
+            | {{injury.source}}
+          dt Last update
+          dd 
+            | {{injury.updatedAt|date:'MMM d, y h:mm:ss a'}}
+          dt Version
+          dd 
+            | {{injury.version}}
