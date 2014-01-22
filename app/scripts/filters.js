@@ -1,6 +1,11 @@
 'use strict';
 
-angular.module('sidelinedApp')
+angular.module('sidelinedApp.filters', [])
+  .filter('capitalize', function() {
+    return function (input) {
+      return input.charAt(0).toUpperCase() + input.substring(1);
+    };
+  })
   .filter('ago', function($filter) {
     var dateFilter = $filter('date');
 
@@ -29,5 +34,18 @@ angular.module('sidelinedApp')
         minutes < 45 && appendString(minutes, 'm') ||
         hours < 24 && appendString(hours, 'h') ||
         dateFilter(originalTime, 'd MMM');
+    };
+  })
+  .filter('domain', function() {
+    return function (input) {
+      var matches,
+          output = "",
+          urls = /\w+:\/\/([\w|\.]+)/;
+
+      matches = urls.exec( input );
+
+      if ( matches !== null ) output = matches[1];
+
+      return output;
     };
   });

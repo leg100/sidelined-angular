@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('sidelinedApp', ['sidelinedApp.directives', 'sidelinedApp.injuries', 'sidelinedApp.auth', 'sidelinedApp.help', 'ui.router', 'rails', 'ui.bootstrap', 'http-auth-interceptor'])
+angular.module('sidelinedApp', ['sidelinedApp.filters', 'sidelinedApp.directives', 'sidelinedApp.injuries', 'sidelinedApp.auth', 'sidelinedApp.help', 'ui.router', 'rails', 'ui.bootstrap', 'http-auth-interceptor'])
   .config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$uiViewScrollProvider', function($locationProvider, $stateProvider, $urlRouterProvider, $uiViewScrollProvider) {
 
     $locationProvider.html5Mode(true).hashPrefix('!');
