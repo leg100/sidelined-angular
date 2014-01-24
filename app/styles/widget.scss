@@ -1,0 +1,78 @@
+/* Widget */
+
+$pink: #FFEBE6;
+$red: #FF0000;
+
+@mixin team-colors {
+  background-color: $red;
+  color: white;
+}
+
+.widget {
+  margin-bottom: 10px;
+  display: table;
+  width: 100%;
+  
+  h4 {
+    margin-top: 5px;
+  }
+
+  .sidebar {
+    vertical-align: top;
+    @include team-colors;
+    min-width: 80px;
+    width: 15%;
+    display: table-cell;
+    padding-left: 5px;
+    padding-right: 10px;
+    h6 {
+      margin-top: 0px;
+      font-weight: normal;
+    }
+    text-align: right;
+  }
+
+  .content {
+    vertical-align: top;
+    width: 85%;
+    display: table-cell;
+    background-color: $pink;
+    padding-right: 5px;
+    padding-left: 10px;
+
+    .quote {
+      margin-right: 5px;
+      &:after {
+        content: " - ";
+      }
+    }
+
+    .micro-button {
+      margin-left: 5px;
+      margin-bottom: 5px;
+    }
+
+    .status {
+      float: left;
+    }
+
+    .ago {
+      float: right
+    }
+
+    .info {
+      clear: both
+    }
+
+    .footer {
+      span {
+        float: right;
+        display: inline-block;
+      }
+      margin-top: 0px;
+      margin-bottom: 5px;
+      margin-bottom: 0px;
+      padding-top: 0px;
+    }
+  }
+}

@@ -94,6 +94,7 @@ body {
 /* My stuff */
 
 @import 'alerts';
+@import 'widget';
 
 @if compass-env() == 'development' {
   * {
@@ -112,7 +113,7 @@ body {
   margin-left: -15px;
 }
 .container {
-  width: 980px !important;
+  max-width: 750px !important;
 }
 .pagination {
   margin-left: 43px;
@@ -126,74 +127,12 @@ body {
 .injuries-container {
   margin-left: -20px;
 }
-.team-colors {
-  padding: 5px;
-  color: white;
-  background-color: #FF0000;
-  height: 100%;
-  position: absolute;
-}
-.injury {
-  padding-right: 5px;
-}
-.widget {
-  padding: 0px 15px 0px 15px;
-  margin: 0px 10px 10px 10px;
-}
-.ticker h4 {
-  padding: 0px;
-  margin-top: 0px;
-  margin-bottom: 1px;
-}
-.player-name h5 {
-  margin-top: 0px;
-}
-.player-name small {
-  font-size: 11px;
-  color: white;
-}
-.detail-link {
-  margin-left: 5px;
-}
-.event {
-  padding: 5px 5px 5px 10px;
-  background-color: #FFEBE6;
-}
-.quote {
-  margin: 5px 10px 0px 0px;
-}
-.micro-button {
-  margin-left: 5px;
-}
-.status {
-  padding-left: 3px;
-}
-.out {
-  padding-left: 1px;
-}
-.ago {
-  padding-right: 10px;
-  position: absolute;
-  right: 0px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  padding-left: 0px;
-}
-.margin {
-  position: absolute !important;
-  height: 100%;
-  padding: 0px 10px 5px 5px;
-  border-right-width: 5px;
-  border-right-style: solid;
-  border-right-color: white;
-}
 .dl-horizontal dt {
   width: 80px;
 }
 .dl-horizontal dd {
   margin-left: 95px;
 }
-
 .revision {
   margin-right: 10px
 }

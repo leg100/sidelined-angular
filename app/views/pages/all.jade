@@ -1,7 +1,5 @@
 .row
-  .col-xs-9.injuries-container
-    .row
-      div(ng-repeat="injury in injuries")
-        ng-include(src="injury.templateUrl")
-    .row
-      pagination(total-items="totalItems" page="page" max-size="maxSize" on-select-page="goToPage(page)" items-per-page="itemsPerPage")
+  div(ng-repeat="injury in injuries")
+    ng-include(src="injury.templateUrl")
+.row
+  pagination(total-items="totalItems" page="page" max-size="maxSize" on-select-page="goToPage(page)" items-per-page="itemsPerPage")
