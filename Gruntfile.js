@@ -45,7 +45,7 @@ module.exports = function (grunt) {
     },
     shell: {
       deploy: {
-        command: 'scp -r dist/* do:/var/www/angular/'
+        command: 'scp -r dist/* do:/var/www/angular/; touch /var/www/rails/current/tmp/restart.txt'
       },
       copy_to_staging: {
         command: 'rsync -av --delete dist/* staging/',
@@ -503,7 +503,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build:dist', [
     'clean:dist',
-    'jade',
+    'jade:dist',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
