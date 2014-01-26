@@ -1,39 +1,63 @@
+.widget
+  .sidebar
+    h4
+      | {{injury.player.shortName}}
+    h6
+      | {{injury.player.longName}} 
+  .content
+    .header
+      h4.status
+        a(ui-sref="injury-show({id:injury.id})")
+          | {{injury.status|capitalize}}
+      h6.ago
+        | {{injury.updatedAt|ago}}
+    .info
+      dl
+        dt Status 
+        dd 
+          | {{injury.status|capitalize}}
+        dt Player 
+        dd 
+          | {{injury.player.longName}}
+        dt Body part
+        dd 
+          | {{injury.bodyPart}}
+        dt Return date 
+        dd 
+          | {{injury.returnDate|date:'dd-MMMM-yyyy'||'Unknown'}}
+        dt Quote
+        dd 
+          | {{injury.quote}}
+        dt Source
+        dd 
+          | {{injury.source}}
+        dt Last update
+        dd 
+          | {{injury.updatedAt|date:'MMM d, y h:mm:ss a'}}
+        dt Version
+        dd 
+          | {{injury.version}}
+    .footer
+      span
+        small
+          | Posted by {{injury.modifier.username}}      
+.widget(ng-repeat="revision in injury.revisions" ng-controller="RevisionCtrl")
+  .sidebar
+    h4
+      | v{{revision.version}}
+  .content
+    .header
+      h4.status
+      h6.ago
+        | {{revision.updatedAt|ago}}
+    .info
+      diff(orig="revision.original" mod="revision.modified")
+    .footer
+      span
+        small
+          | Posted by {{injury.modifier.username}}      
+        button.btn.btn-warning.btn-xs.micro-button(ng-click="revert(revision.version)" ng-hide="injury.version == revision.version") Revert
 .row
-  .col-xs-9.injury-container
-    .row
-      .col-xs-12
-        h3 Injury
-        dl.dl-horizontal
-          dt Status 
-          dd 
-            | {{injury.status|capitalize}}
-          dt Player 
-          dd 
-            | {{injury.player.longName}}
-          dt Body part
-          dd 
-            | {{injury.bodyPart}}
-          dt Return date 
-          dd 
-            | {{injury.returnDate|date:'dd-MMMM-yyyy'||'Unknown'}}
-          dt Quote
-          dd 
-            | {{injury.quote}}
-          dt Source
-          dd 
-            | {{injury.source}}
-          dt Last update
-          dd 
-            | {{injury.updatedAt|date:'MMM d, y h:mm:ss a'}}
-          dt Version
-          dd 
-            | {{injury.version}}
-    .row
-      .col-xs-12
-        h4 Revisions
-        div(ng-repeat="revision in injury.revisions")
-          ng-include(src="revisionTemplates[revision.action]")
-    .row
-      .col-xs-12
-        pre
-          | {{injury.revisions|json}}
+  .col-xs-12
+    pre
+      | {{injury.revisions|json}}

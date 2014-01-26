@@ -7,13 +7,14 @@
   .content
     .header
       h4.status
-        | {{injury.status|capitalize}}
+        a(ui-sref="injury-show({id:injury.id})")
+          | {{injury.status|capitalize}}
       h6.ago
         | {{injury.updatedAt|ago}}
     .info
       i.quote(ng-if="injury.quote")
         | {{injury.quote}}
-      a.source(href="#")
+      a.source(href="{{injury.source}}")
         | {{injury.source|domain}}
     .footer
       span

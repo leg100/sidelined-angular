@@ -8,7 +8,8 @@
     "jquery": "~1.10.2",
     "sass-bootstrap": "~3.0.0",
     "angularjs-rails-resource": "~1.0.0",
-    "angular-ui-router": "bower"
+    "angular-ui-router": "bower",
+    "jsdiff": "~1.0.8"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",

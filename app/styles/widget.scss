@@ -69,6 +69,7 @@ $red: #FF0000;
         float: right;
         display: inline-block;
       }
+      border-top: 0px; // override bootstrap default
       margin-top: 0px;
       margin-bottom: 5px;
       margin-bottom: 0px;

@@ -122,6 +122,40 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
       });
     };
   }])
+  .factory('Diff', function() {
+    return JsDiff;
+  })
+  .controller('RevisionCtrl', ['Diff', '$scope', '$state', 'Injury', 'AlertBroker', function(Diff, $scope, $state, Injury, AlertBroker) {
+  }])
+  .directive('diff', ['Diff', function(Diff) {
+    return {
+      restrict: 'E', // only activate on element attribute
+      link: function(scope, elem, attrs) {
+        var orig = scope.$eval(attrs.orig);
+        var mod = scope.$eval(attrs.mod);
+        var diffs = [];
+        var html = '<pre>';
+
+        for(var k in mod) {
+          var origH = {}, modH = {}; 
+          modH[k] = mod[k];
+          if (orig[k]) {
+            origH[k] = orig[k];
+          }
+
+          var origString = JSON.stringify(origH).replace(/[\{\}]/gm, '');
+          var modString = JSON.stringify(modH).replace(/[\{\}]/gm, '');
+
+          Diff.diffLines(origString, modString).forEach(function(d) {
+            var val = d.value.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+            var klass = d.added ? 'green' : d.removed ? 'red' : 'grey';
+            html = html + '<span class="'+ klass +'">'+ val + '</span>';
+          });
+        };
+        elem.append(html +'</pre>');
+      }
+    };
+  }])
   .factory('Injury', ['railsResourceFactory', 'railsSerializer', function(railsResourceFactory, railsSerializer) {
     var factory = railsResourceFactory({
       url: '/api/injuries',
