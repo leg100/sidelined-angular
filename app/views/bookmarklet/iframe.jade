@@ -21,6 +21,8 @@ html
     .row
       .col-xs-12
         .ui-view
+    if integration
+      script(src='/bower_components/jquery/jquery.js')
     // build:js({.tmp,app}) /scripts/bookmarklet_app.js
     script(src='/bower_components/angular/angular.js')
     script(src='/bower_components/angular-ui-router/release/angular-ui-router.js')
