@@ -45,7 +45,10 @@ module.exports = function (grunt) {
     },
     shell: {
       deploy: {
-        command: 'scp -r dist/* do:/var/www/angular/; touch /var/www/rails/current/tmp/restart.txt'
+        command: 'scp -r dist/* do:/var/www/angular/ && ssh do "touch /var/www/rails/current/tmp/restart.txt"',
+        options: {
+          stdout: true
+        }
       },
       copy_to_staging: {
         command: 'rsync -av --delete dist/* staging/',
