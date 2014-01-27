@@ -17,7 +17,7 @@ angular.module('sidelinedApp', ['sidelinedApp.filters', 'sidelinedApp.directives
       },
       resolve: {
         injury: ['Injury', function(Injury) {
-          return Injury.new_with_defaults();
+          return Injury.newWithDefaults();
         }]
       }
     })
@@ -72,10 +72,10 @@ angular.module('sidelinedApp', ['sidelinedApp.filters', 'sidelinedApp.directives
     .state('confirmed', {
       url: '/confirmed?status',
       controller: ['AlertBroker', '$state', '$stateParams', function(AlertBroker, $state, $stateParams) {
-        if ($stateParams.status == 'success') {
+        if ($stateParams.status === 'success') {
           AlertBroker.success('Successfully confirmed your signup');
         }
-        if ($stateParams.status == 'failure') {
+        if ($stateParams.status === 'failure') {
           AlertBroker.error('There was an error confirming your signup');
         }
       }]

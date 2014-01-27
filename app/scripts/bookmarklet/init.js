@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('bookmarkletApp', ['sidelinedApp.filters', 'ui.router', 'ui.bootstrap', 'sidelinedApp.injuries', 'sidelinedApp.players', 'sidelinedApp.alerts', 'http-auth-interceptor', 'sidelinedApp.auth', 'ui.bootstrap'])
   .config(['$locationProvider', '$stateProvider', '$urlRouterProvider', function($locationProvider, $stateProvider, $urlRouterProvider) {
 
@@ -14,8 +16,8 @@ angular.module('bookmarkletApp', ['sidelinedApp.filters', 'ui.router', 'ui.boots
       },
       resolve: {
         injury: ['Injury', function(Injury) {
-          var url = (window.location != window.parent.location) ? document.referrer: document.location;
-          return Injury.new_with_defaults({source: url});
+          var url = (window.location !== window.parent.location) ? document.referrer: document.location;
+          return Injury.newWithDefaults({source: url});
         }]
       }
     })

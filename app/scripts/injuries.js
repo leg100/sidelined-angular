@@ -37,9 +37,9 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
         }, function() {
           AlertBroker.success('found no current injuries');
           $scope.isNew = true;
-          var reset_injury = Injury.new_with_defaults({player: $scope.injury.player});
-          if ($scope.isBookmarklet) reset_injury.source = $scope.injury.source;
-          $scope.injury = reset_injury;
+          var resetInjury = Injury.newWithDefaults({player: $scope.injury.player});
+          if ($scope.isBookmarklet) { resetInjury.source = $scope.injury.source; }
+          $scope.injury = resetInjury;
         });
     };
 
@@ -99,7 +99,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
     };
 
     $scope.goToPage = function(page) {
-      $state.go('injuries-by-page', {page: page})
+      $state.go('injuries-by-page', {page: page});
     };
   }])
   .controller('InjuryShowCtrl', ['$scope', '$state', 'Injury', 'AlertBroker', function($scope, $state, Injury, AlertBroker) {
@@ -116,7 +116,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
         version: version
       }).then(function(resp) {
         $scope.injury = resp;
-        AlertBroker.success("updated injury to version "+$scope.injury.version);
+        AlertBroker.success('updated injury to version '+$scope.injury.version);
       }, function(err) {
         AlertBroker.error(err.data.info);
       });
@@ -137,7 +137,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
         var html = '<pre>';
 
         for(var k in mod) {
-          var origH = {}, modH = {}; 
+          var origH = {}, modH = {};
           modH[k] = mod[k];
           if (orig[k]) {
             origH[k] = orig[k];
@@ -151,7 +151,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
             var klass = d.added ? 'green' : d.removed ? 'red' : 'grey';
             html = html + '<span class="'+ klass +'">'+ val + '</span>';
           });
-        };
+        }
         elem.append(html +'</pre>');
       }
     };
@@ -184,20 +184,20 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
       }]
     });
 
-    factory.new_with_defaults = function(override) {
+    factory.newWithDefaults = function(override) {
       var defaults = {
         status: 'injured',
         player: null,
         source: null,
         quote: null,
         returnDate: null
-      }
-      if (override) angular.extend(defaults, override);
+      };
+      if (override) { angular.extend(defaults, override); }
       return new this(defaults);
     };
 
     return factory;
-}])
+  }])
   .factory('InjuryListingService', ['$rootScope', function($rootScope) {
     var injuryListingService = {};
     injuryListingService.broadcastItem = function() {
