@@ -4,91 +4,35 @@ angular.module('sidelinedApp', ['sidelinedApp.filters', 'sidelinedApp.directives
   .config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$uiViewScrollProvider', function($locationProvider, $stateProvider, $urlRouterProvider, $uiViewScrollProvider) {
 
     $locationProvider.html5Mode(true).hashPrefix('!');
-    $urlRouterProvider.otherwise('/injuries');
+    $urlRouterProvider.otherwise('/injuries/page/1');
     $uiViewScrollProvider.useAnchorScroll();
 
     $stateProvider
-    .state('newinjury', {
-      url: '/injuries/new',
-      templateUrl: '/views/forms/injury.html',
-      controller: 'InjuryFormCtrl',
-      data: {
-        isNew: false
-      },
-      resolve: {
-        injury: ['Injury', function(Injury) {
-          return Injury.newWithDefaults();
+      .state('signup', {
+        templateUrl: '/views/auth/signup.html',
+        url: '/signup',
+        controller: 'SignupCtrl'
+      })
+      .state('confirmed', {
+        url: '/confirmed?status',
+        controller: ['AlertBroker', '$state', '$stateParams', function(AlertBroker, $state, $stateParams) {
+          if ($stateParams.status === 'success') {
+            AlertBroker.success('Successfully confirmed your signup');
+          }
+          if ($stateParams.status === 'failure') {
+            AlertBroker.error('There was an error confirming your signup');
+          }
         }]
-      }
-    })
-    .state('injury-update', {
-      url: '/injuries/:id/update',
-      templateUrl: '/views/forms/injury.html',
-      controller: 'InjuryFormCtrl',
-      data: {
-        isNew: false
-      },
-      resolve: {
-        injury: ['Injury', '$stateParams', function(Injury, $stateParams) {
-          return Injury.get($stateParams.id);
-        }]
-      }
-    })
-    .state('injuries-by-page', {
-      url: '/injuries/page/:page',
-      templateUrl: '/views/pages/all.html',
-      controller: 'InjuryListCtrl',
-      resolve: {
-        injuries: ['Injury', '$stateParams', function(Injury, $stateParams) {
-          return Injury.query({page: $stateParams.page});
-        }]
-      }
-    })
-    .state('injury-show', {
-      url: '/injuries/:id',
-      templateUrl: '/views/pages/injury.html',
-      controller: 'InjuryShowCtrl',
-      resolve: {
-        injury: ['Injury', '$stateParams', function(Injury, $stateParams) {
-          return Injury.get($stateParams.id);
-        }]
-      }
-    })
-    .state('injuries', {
-      url: '/injuries{trailing:\/?}',
-      templateUrl: '/views/pages/all.html',
-      controller: 'InjuryListCtrl',
-      resolve: {
-        injuries: ['Injury', function(Injury) {
-          return Injury.query();
-        }]
-      }
-    })
-    .state('signup', {
-      templateUrl: '/views/auth/signup.html',
-      url: '/signup',
-      controller: 'SignupCtrl'
-    })
-    .state('confirmed', {
-      url: '/confirmed?status',
-      controller: ['AlertBroker', '$state', '$stateParams', function(AlertBroker, $state, $stateParams) {
-        if ($stateParams.status === 'success') {
-          AlertBroker.success('Successfully confirmed your signup');
-        }
-        if ($stateParams.status === 'failure') {
-          AlertBroker.error('There was an error confirming your signup');
-        }
-      }]
-    })
-    .state('help', {
-      templateUrl: '/views/pages/help.html',
-      url: '/help',
-      controller: 'HelpCtrl'
-    })
-    .state('error', {
-      template: '<h1>HTTP500</h1>',
-      url: '/error'
-    });
+      })
+      .state('help', {
+        templateUrl: '/views/pages/help.html',
+        url: '/help',
+        controller: 'HelpCtrl'
+      })
+      .state('error', {
+        template: '<h1>HTTP500</h1>',
+        url: '/error'
+      });
   }]).run(['Session', function(Session) {
     Session.requestCurrentUser();
   }]);

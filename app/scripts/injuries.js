@@ -1,6 +1,62 @@
 'use strict';
 
-angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.bootstrap', 'sidelinedApp.players'])
+angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.bootstrap', 'sidelinedApp.players', 'ui.router'])
+  .config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$uiViewScrollProvider', function($locationProvider, $stateProvider, $urlRouterProvider, $uiViewScrollProvider) {
+
+    $stateProvider
+      .state('injuries', {
+        abstract: true,
+        url: '/injuries',
+        templateUrl: '/views/injuries.html'
+      })
+      .state('injuries.new', {
+        url: '/new',
+        templateUrl: '/views/forms/injury.html',
+        controller: 'InjuryFormCtrl',
+        data: {
+          isNew: false
+        },
+        resolve: {
+          injury: ['Injury', function(Injury) {
+            return Injury.newWithDefaults();
+          }]
+        }
+      })
+      .state('injuries.update', {
+        url: '/:id/update',
+        templateUrl: '/views/forms/injury.html',
+        controller: 'InjuryFormCtrl',
+        data: {
+          isNew: false
+        },
+        resolve: {
+          injury: ['Injury', '$stateParams', function(Injury, $stateParams) {
+            return Injury.get($stateParams.id);
+          }]
+        }
+      })
+      .state('injuries.show', {
+        url: '/:id',
+        templateUrl: '/views/pages/injury.html',
+        controller: 'InjuryShowCtrl',
+        resolve: {
+          injury: ['Injury', '$stateParams', function(Injury, $stateParams) {
+            return Injury.get($stateParams.id);
+          }]
+        }
+      })
+      .state('injuries.list', {
+        url: '/page/:page',
+        templateUrl: '/views/pages/all.html',
+        controller: 'InjuryListCtrl',
+        resolve: {
+          injuries: ['Injury', '$stateParams', function(Injury, $stateParams) {
+            var page = $stateParams.page || 1;
+            return Injury.query({page: page});
+          }]
+        }
+      })
+  }])
   .controller('InjuryFormCtrl', ['$scope', 'Player', 'Injury', 'injury', 'AlertBroker', 'limitToFilter', '$filter', '$state', function($scope, Player, Injury, injury, AlertBroker, limitToFilter, $filter, $state) {
 
     $scope.injury = injury;
@@ -46,7 +102,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
     // trigger add
     $scope.add = function() {
       $scope.injury.create().then(function(resp) {
-        $state.go('injury-show', { id: resp.id });
+        $state.go('injury.show', { id: resp.id });
       }, function(err) {
         AlertBroker.error(err.data);
       });
@@ -55,7 +111,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
     $scope.update = function() {
       $scope.injury.update().then(function(resp) {
         AlertBroker.success('Updated injury '+ resp.id);
-        $state.go('injury-show', {id: resp.id});
+        $state.go('injury.show', {id: resp.id});
       }, function(err) {
         AlertBroker.error(err.data);
       });
@@ -83,7 +139,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
 
     $scope.updateInjury = function(index) {
       var injury = $scope.injuries[index];
-      $state.go('injury-show', { id: injury.id });
+      $state.go('injury.show', { id: injury.id });
     };
 
     $scope.removeInjury = function(index) {
@@ -99,7 +155,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
     };
 
     $scope.goToPage = function(page) {
-      $state.go('injuries-by-page', {page: page});
+      $state.go('injuries.list', {page: page});
     };
   }])
   .controller('InjuryShowCtrl', ['$scope', '$state', 'Injury', 'AlertBroker', function($scope, $state, Injury, AlertBroker) {

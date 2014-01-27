@@ -7,7 +7,7 @@
   .content
     .header
       h4.status
-        a(ui-sref="injury-show({id:injury.id})")
+        a(ui-sref="injuries.show({id:injury.id})")
           | {{injury.status|capitalize}}
       h6.ago
         | {{injury.updatedAt|ago}}
