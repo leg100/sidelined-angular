@@ -102,7 +102,8 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
     // trigger add
     $scope.add = function() {
       $scope.injury.create().then(function(resp) {
-        $state.go('injury.show', { id: resp.id });
+        AlertBroker.success('Added injury '+ resp.id);
+        $state.go('injuries.show', { id: resp.id });
       }, function(err) {
         AlertBroker.error(err.data);
       });
@@ -111,7 +112,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
     $scope.update = function() {
       $scope.injury.update().then(function(resp) {
         AlertBroker.success('Updated injury '+ resp.id);
-        $state.go('injury.show', {id: resp.id});
+        $state.go('injuries.show', {id: resp.id});
       }, function(err) {
         AlertBroker.error(err.data);
       });
@@ -139,7 +140,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
 
     $scope.updateInjury = function(index) {
       var injury = $scope.injuries[index];
-      $state.go('injury.show', { id: injury.id });
+      $state.go('injuries.show', { id: injury.id });
     };
 
     $scope.removeInjury = function(index) {
