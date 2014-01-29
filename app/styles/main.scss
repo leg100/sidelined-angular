@@ -137,6 +137,10 @@ body {
   margin-right: 10px
 }
 
+.filters {
+  padding: 0px 0px 10px 15px;
+}
+
 .green {
   background-color: lightgreen;
   display: block;
@@ -147,6 +151,11 @@ body {
 }
 .grey {
   background-color: grey;
+  display: block;
+}
+
+#loader {
+  margin: 20px auto 20px auto;
   display: block;
 }
 

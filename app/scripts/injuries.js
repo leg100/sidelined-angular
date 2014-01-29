@@ -52,7 +52,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
         resolve: {
           injuries: ['Injury', '$stateParams', function(Injury, $stateParams) {
             var page = $stateParams.page || 1;
-            return Injury.query({page: page});
+            return Injury.query({page: page, statuses: Injury.filterQuery()});
           }]
         }
       })
@@ -127,15 +127,40 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
     $scope.itemsPerPage = 10;
     $scope.format = 'dd-MMMM-yyyy';
     $scope.injuries = injuries;
+    $scope.filters = Injury.filters;
     $scope.page = $stateParams.page || 1;
     $scope.totalItems = injuries.$total;
     $scope.maxSize = 10;
+    $scope.loading = false;
+    $scope.totalPages = $scope.totalItems / $scope.itemsPerPage;
 
     $scope.$on('handleBroadcast', function() {
       Injury.query({page: 1, _type: 'Injury'})
       .then(function(resp) {
         $scope.injuries = resp;
       });
+    });
+
+    $scope.showPagination = function() {
+      return !$scope.isLoading() && $scope.totalPages > 1;
+    };
+
+    $scope.$watch('filters', function(newObj, oldObj) {
+      if (!angular.equals(newObj, oldObj)) {
+        $state.go('injuries.list', {page:$scope.page}, {reload: true});
+      }
+    }, true);
+
+    $scope.isLoading = function() {
+      return $scope.loading;
+    };
+
+    $scope.$on('$stateChangeStart', function() {
+      $scope.loading = true;
+    });
+
+    $scope.$on('$stateChangeSuccess', function() {
+      $scope.loading = false;
     });
 
     $scope.updateInjury = function(index) {
@@ -240,6 +265,20 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
         }
       }]
     });
+
+    factory.filters = {
+      'injured': true,
+      'doubtful': true,
+      'recovered': false
+    };
+
+    factory.filterQuery = function() {
+      var query = [];
+      for (var f in this.filters) {
+        if (this.filters[f]) { query.push(f); }
+      }
+      return query.join('|');
+    };
 
     factory.newWithDefaults = function(override) {
       var defaults = {
