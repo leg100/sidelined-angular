@@ -18,15 +18,10 @@ angular.module('sidelinedApp.filters', [])
         return 'Never';
       }
       var originalTime = time;
-
-      time = time.replace(/\.\d+/, '');
-      time = time.replace(/-/, '/').replace( /-/, '/');
-      time = time.replace(/T/, ' ').replace(/Z/, ' UTC');
-      time = time.replace(/([\+\-]\d\d)\:?(\d\d)/, ' $1$2');
-      time = new Date(time * 1000) || time;
-
+      time = Date.parse(time);
       var now = new Date();
-      var seconds = now.getTime() - time;
+
+      var seconds = (now - time) / 1000;
       var minutes = seconds / 60;
       var hours = minutes / 60;
    
