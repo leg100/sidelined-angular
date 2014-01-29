@@ -54,6 +54,10 @@ $red: #FF0000;
 
     .status {
       float: left;
+
+      .small {
+        margin-left: 5px;
+      }
     }
 
     .ago {

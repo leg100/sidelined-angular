@@ -31,6 +31,40 @@ angular.module('sidelinedApp.filters', [])
         dateFilter(originalTime, 'd MMM');
     };
   })
+  .filter('longAgo', function($filter) {
+    var dateFilter = $filter('date');
+
+    var appendString = function(d, s) {
+      return 'Sidelined for '+ Math.abs(Math.round(d)) + ' ' + s;
+    };
+   
+    return function(time) {
+      if (!time) {
+        return 'Unknown return date';
+      }
+
+      time = Date.parse(time);
+      var now = Date.now();
+
+      if (time < now) {
+        return null;
+      }
+
+      var seconds = (time - now) / 1000;
+      var minutes = seconds / 60;
+      var hours = minutes / 60;
+      var days = hours / 24;
+      var weeks = days / 7;
+      var months = weeks / 4;
+   
+      return days < 2 && appendString(days, 'day') ||
+        days < 7 && appendString(days, 'days') ||
+        weeks < 2 && appendString(weeks, 'week') ||
+        weeks < 4 && appendString(weeks, 'weeks') ||
+        months < 2 && appendString(months, 'month') ||
+        appendString(months, 'months');
+    };
+  })
   .filter('domain', function() {
     return function (input) {
       var matches,

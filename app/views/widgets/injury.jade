@@ -9,6 +9,8 @@
       h4.status
         a(ui-sref="injuries.show({id:injury.id})")
           | {{injury.status|capitalize}}
+        span.small
+          | {{injury.returnDate|longAgo}}
       h6.ago
         | {{injury.updatedAt|ago}}
     .info
