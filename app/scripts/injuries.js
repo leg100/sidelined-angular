@@ -123,7 +123,7 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
     };
 
   }])
-  .controller('InjuryListCtrl', ['$scope', 'Injury', 'InjuryListingService', 'AlertBroker', 'injuries', '$location', '$state', '$stateParams', function($scope, Injury, InjuryListingService, AlertBroker, injuries, $location, $state, $stateParams) {
+  .controller('InjuryListCtrl', ['$scope', 'Injury', 'AlertBroker', 'injuries', '$location', '$state', '$stateParams', function($scope, Injury, AlertBroker, injuries, $location, $state, $stateParams) {
     $scope.itemsPerPage = 10;
     $scope.format = 'dd-MMMM-yyyy';
     $scope.injuries = injuries;
@@ -294,10 +294,3 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
 
     return factory;
   }])
-  .factory('InjuryListingService', ['$rootScope', function($rootScope) {
-    var injuryListingService = {};
-    injuryListingService.broadcastItem = function() {
-      $rootScope.$broadcast('handleBroadcast');
-    };
-    return injuryListingService;
-  }]);
