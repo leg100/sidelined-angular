@@ -41,6 +41,7 @@
       span
         small
           | Posted by {{injury.modifier.username}}      
+          a.button.btn.btn-primary.btn-xs.micro-button(ng-href="/injuries/{{injury.id}}/update") Update
 .widget(ng-repeat="revision in injury.revisions" ng-controller="RevisionCtrl")
   .sidebar
     h4
