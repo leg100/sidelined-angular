@@ -34,9 +34,8 @@ body {
     }
 }
 
-@media screen and (min-width: 480px) {
-  .form-inline,
-  .form-group {
+@media screen and (min-width: 400px) {
+  .form-inline .form-group {
     display: inline-block;
     margin-bottom: 0;
     vertical-align: middle;
