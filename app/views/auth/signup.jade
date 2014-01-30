@@ -1,5 +1,5 @@
 .row
-  .col-xs-9.signup-form-container
+  .col-xs-9.signup-form-container(ng-hide="done")
     form(novalidate name="form" class="signup-form")
       h4 Sign up
         div.alert.alert-info Please enter your details
@@ -20,3 +20,5 @@
           input.form-control(name="passwordConfirmation" type="password" ng-model="user.passwordConfirmation" required)
       div.modal-footer
         button.btn.btn-primary.login(ng-click="signup()" ng-disabled='form.$invalid') Sign up
+  .col-xs-9(ng-show="done")
+    h4 Done. Please check your email for signup confirmation

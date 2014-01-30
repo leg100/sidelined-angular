@@ -8,6 +8,7 @@ angular.module('sidelinedApp')
       password: null,
       passwordConfirmation: null
     };
+    $scope.done = false;
 
     $scope.getClass = function(ngModelCtrl) {
       return {
@@ -27,7 +28,7 @@ angular.module('sidelinedApp')
         $scope.user.passwordConfirmation,
         $scope.user.email
       ).then(function() {
-        AlertBroker.success('Please check your email for signup confirmation');
+        $scope.done = true;
       }, function(err) {
         AlertBroker.error(err);
       });
