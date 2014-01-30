@@ -10,7 +10,7 @@
         a(ui-sref="injuries.show({id:injury.id})")
           | {{injury.status|capitalize}}
       h6.ago
-        | {{injury.updatedAt|ago}}
+        | {{injury.updatedAt|timeago}}
     .info
       dl
         dt Status 
@@ -50,7 +50,7 @@
     .header
       h4.status
       h6.ago
-        | {{revision.updatedAt|ago}}
+        | {{revision.updatedAt|timeago}}
     .info
       diff(orig="revision.original" mod="revision.modified")
     .footer

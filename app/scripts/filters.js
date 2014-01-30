@@ -6,65 +6,26 @@ angular.module('sidelinedApp.filters', [])
       return input.charAt(0).toUpperCase() + input.substring(1);
     };
   })
-  .filter('ago', function($filter) {
-    var dateFilter = $filter('date');
-
-    var appendString = function(d, s) {
-      return Math.abs(Math.round(d)) + s;
-    };
-   
-    return function(time) {
-      if (!time) {
-        return 'Never';
+  .filter('timeago', ['$window', function($window){
+    return function(date){
+      if (typeof date === 'undefined' || date === null) {
+        return '';
       }
-      var originalTime = time;
-      time = Date.parse(time);
-      var now = new Date();
-
-      var seconds = (now - time) / 1000;
-      var minutes = seconds / 60;
-      var hours = minutes / 60;
-   
-      return seconds < 45 && appendString(seconds, 's') ||
-        minutes < 45 && appendString(minutes, 'm') ||
-        hours < 24 && appendString(hours, 'h') ||
-        dateFilter(originalTime, 'd MMM');
+      return $window.moment(date).fromNow();
     };
-  })
-  .filter('longAgo', function($filter) {
-    var dateFilter = $filter('date');
-
-    var appendString = function(d, s) {
-      return 'Sidelined for '+ Math.abs(Math.round(d)) + ' ' + s;
-    };
-   
-    return function(time) {
-      if (!time) {
-        return 'Unknown return date';
+  }])
+  .filter('sidelined', ['$window', function($window){
+    return function(date){
+      if (typeof date === 'undefined' || date === null) {
+        return 'Return date unknown';
       }
-
-      time = Date.parse(time);
-      var now = Date.now();
-
-      if (time < now) {
-        return null;
+      // we should only get dates in the future
+      if ((Date.now() - Date.parse(date)) > 0) {
+        return 'Return was due on ' + date;
       }
-
-      var seconds = (time - now) / 1000;
-      var minutes = seconds / 60;
-      var hours = minutes / 60;
-      var days = hours / 24;
-      var weeks = days / 7;
-      var months = weeks / 4;
-   
-      return days < 2 && appendString(days, 'day') ||
-        days < 7 && appendString(days, 'days') ||
-        weeks < 2 && appendString(weeks, 'week') ||
-        weeks < 4 && appendString(weeks, 'weeks') ||
-        months < 2 && appendString(months, 'month') ||
-        appendString(months, 'months');
+      return 'Sidelined for ' + $window.moment().from(date, true);
     };
-  })
+  }])
   .filter('domain', function() {
     return function (input) {
       var matches,

@@ -10,9 +10,9 @@
         a(ui-sref="injuries.show({id:injury.id})")
           | {{injury.status|capitalize}}
         span.small
-          | {{injury.returnDate|longAgo}}
+          | {{injury.returnDate|sidelined}}
       h6.ago
-        | {{injury.updatedAt|ago}}
+        | {{injury.updatedAt|timeago}}
     .info
       i.quote(ng-if="injury.quote")
         | {{injury.quote}}
