@@ -1,0 +1,12 @@
+.widget
+  .sidebar
+    h4
+      | {{player.shortName}}
+  .content
+    .header
+      h4.status
+        a(ui-sref="players.show({id:player.id})")
+          | {{player.longName}}
+    .footer
+      span
+        a.button.btn.btn-primary.btn-xs.micro-button(ui-sref="players.update({id: player.id})") Update      

@@ -1,0 +1,13 @@
+div.form-container
+  form(novalidate name="form")
+    .form-group(ng-class="getClass(form.long_name)")
+      input.form-control(name="long_name" type="text" ng-model="player.longName" placeholder="Full name" ensure-unique data-object="player")
+      span.help-block(ng-show="showError(form.long_name,'unique')") Player name is taken.
+    .form-group(ng-class="getClass(form.short_name)")
+      input.form-control(name="short_name" type="text" ng-model="player.shortName" placeholder="Ticker symbol" ensure-unique data-object="player" minlength="2" maxlength="5")
+      span.help-block(ng-show="showError(form.short_name,'unique')") Ticker is taken.
+    .form-group
+      select.form-control(ng-model="player.club" ng-options="club as club.longName for club in clubs")
+    button.btn.btn-primary(ng-show="isNew" ng-click="add()" ng-disabled="!canSave()") Add
+    button.btn.btn-primary(ng-show="!isNew" ng-click="update()" ng-disabled="!canSave()") Update
+    button.btn.cancel(ng-click="cancel()") Cancel

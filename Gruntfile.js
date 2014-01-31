@@ -185,6 +185,7 @@ module.exports = function (grunt) {
               require('grunt-connect-proxy/lib/utils').proxyRequest,
               //require('connect-modrewrite')(['!(\\..+)$ / [L]']),
               require('connect-modrewrite')([
+                '^/players(/.*)? / [L]',
                 '^/injuries(/.*)? / [L]',
                 '^/signup / [L]',
                 '^/help / [L]',

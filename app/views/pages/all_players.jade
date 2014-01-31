@@ -1,0 +1,8 @@
+.row(ng-hide="isLoading()")
+  div(ng-repeat="player in players")
+    ng-include(src="player.templateUrl")
+.row(ng-show="isLoading()")
+  .col-xs-12
+    img#loader(src="/images/ajax-loader.gif")
+.row(ng-show="showPagination()")
+  pagination(total-items="totalItems" page="page" max-size="maxSize" on-select-page="goToPage(page)" items-per-page="itemsPerPage")

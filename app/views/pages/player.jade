@@ -1,0 +1,48 @@
+.widget
+  .sidebar
+    h4
+      | {{player.shortName}}
+  .content
+    .header
+      h4.status
+        a(ui-sref="players.show({id:player.id})")
+          | {{player.longName}} 
+    .info
+      dl
+        dt Full Name 
+        dd 
+          | {{player.longName}}
+        dt Ticker 
+        dd 
+          | {{player.shortName}}
+        dt Club
+        dd
+          | {{player.club.longName}}
+        dt Version
+        dd 
+          | {{player.version}}
+    .footer
+      span
+        small
+          | Posted by {{player.modifier.username||'unknown'}}      
+          a.button.btn.btn-primary.btn-xs.micro-button(ui-sref="players.update({id: player.id})") Update
+.widget(ng-repeat="revision in player.revisions")
+  .sidebar
+    h4
+      | v{{revision.version}}
+  .content
+    .header
+      h4.status
+      h6.ago
+        | {{revision.updatedAt|timeago}}
+    .info
+      diff(orig="revision.original" mod="revision.modified")
+    .footer
+      span
+        small
+          | Posted by {{player.modifier.username||'unknown'}}      
+        button.btn.btn-warning.btn-xs.micro-button(ng-click="revert(revision.version)" ng-hide="player.version == revision.version") Revert
+.row
+  .col-xs-12
+    pre
+      | {{player.revisions|json}}
