@@ -58,7 +58,3 @@
         small
           | Posted by {{injury.modifier.username}}      
         button.btn.btn-warning.btn-xs.micro-button(ng-click="revert(revision.version)" ng-hide="injury.version == revision.version") Revert
-.row
-  .col-xs-12
-    pre
-      | {{injury.revisions|json}}

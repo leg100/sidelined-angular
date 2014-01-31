@@ -42,7 +42,3 @@
         small
           | Posted by {{player.modifier.username||'unknown'}}      
         button.btn.btn-warning.btn-xs.micro-button(ng-click="revert(revision.version)" ng-hide="player.version == revision.version") Revert
-.row
-  .col-xs-12
-    pre
-      | {{player.revisions|json}}
