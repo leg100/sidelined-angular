@@ -37,6 +37,17 @@ html.no-js(ng-app='sidelinedApp')
       .row
         .col-xs-8.alert-container(ng-controller="AlertCtrl")
           alert(ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)") {{alert.msg}}
+      .row
+        .col-xs-12
+          ul.breadcrumbs.list-inline
+            li(ng-repeat="breadcrumb in Breadcrumbs.getAll()")
+              span.divider /
+              ng-switch(on="$last")
+                span(ng-switch-when="$last")
+                  | {{breadcrumb.name}}
+                span(ng-switch-default)
+                  a(href="{{breadcrumb.path}}")
+                    | {{breadcrumb.name}}
       .ui-view
     .footer
       .container
@@ -59,6 +70,7 @@ html.no-js(ng-app='sidelinedApp')
     script(src='/scripts/controllers/Signup.js')
     script(src='/scripts/controllers/Help.js')
     script(src='/scripts/services/Session.js')
+    script(src='/scripts/services/Breadcrumbs.js')
     script(src='/scripts/filters.js')
     script(src='/scripts/directives.js')
     script(src='/scripts/injuries.js')
