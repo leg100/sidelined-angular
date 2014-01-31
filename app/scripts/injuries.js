@@ -134,13 +134,6 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
     $scope.loading = false;
     $scope.totalPages = $scope.totalItems / $scope.itemsPerPage;
 
-    $scope.$on('handleBroadcast', function() {
-      Injury.query({page: 1, _type: 'Injury'})
-      .then(function(resp) {
-        $scope.injuries = resp;
-      });
-    });
-
     $scope.showPagination = function() {
       return !$scope.isLoading() && $scope.totalPages > 1;
     };
@@ -162,23 +155,6 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
     $scope.$on('$stateChangeSuccess', function() {
       $scope.loading = false;
     });
-
-    $scope.updateInjury = function(index) {
-      var injury = $scope.injuries[index];
-      $state.go('injuries.show', { id: injury.id });
-    };
-
-    $scope.removeInjury = function(index) {
-      var injury = $scope.injuries[index];
-
-      injury.remove().then(function(resp){
-        Injury.query({page: 1})
-        .then(function(resp) {
-          $scope.injuries = resp;
-        });
-        AlertBroker.success('Removed injury '+ resp.id);
-      });
-    };
 
     $scope.goToPage = function(page) {
       $state.go('injuries.list', {page: page});
@@ -207,8 +183,6 @@ angular.module('sidelinedApp.injuries', ['rails', 'sidelinedApp.alerts', 'ui.boo
   .factory('Diff', function() {
     return JsDiff;
   })
-  .controller('RevisionCtrl', ['Diff', '$scope', '$state', 'Injury', 'AlertBroker', function(Diff, $scope, $state, Injury, AlertBroker) {
-  }])
   .directive('diff', ['Diff', function(Diff) {
     return {
       restrict: 'E', // only activate on element attribute
