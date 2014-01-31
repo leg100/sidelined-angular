@@ -1,9 +1,8 @@
 .row
-  .col-xs-12.filters
-    a(ui-sref="injuries.new") Add new injury
-.row
-  .col-xs-12.filters
-    form.form-inline(role="form")
+  .col-xs-12
+    form.form-inline(role="form").filters
+      .form-group.add
+        a.button.btn.btn-primary.btn-xs(ui-sref="injuries.new") Add injury
       .form-group
         label Injured
         input(type="checkbox" ng-model="filters.injured")
