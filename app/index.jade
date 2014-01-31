@@ -1,5 +1,5 @@
 doctype html
-html.no-js
+html.no-js(ng-app='sidelinedApp')
   head
     base(href="/")
     meta(charset='utf-8')
@@ -12,7 +12,7 @@ html.no-js
     link(rel='stylesheet', href='/styles/main.css')
     link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Oswald:400')
     // endbuild
-  body(ng-app='sidelinedApp' ng-controller='SiteCtrl')
+  body(ng-controller='SiteCtrl')
     nav.navbar.navbar-default.navbar-static-top
       .container
         .navbar-header
