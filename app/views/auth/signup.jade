@@ -5,11 +5,11 @@
         div.alert.alert-info Please enter your details
         .form-group(ng-class="getClass(form.username)")
           label.control-label(for="username") Username
-          input.form-control(id="signup_username" name="username" type="text" ng-model="user.username" ensure-unique required autofocus)
+          input.form-control(id="signup_username" data-object="user" name="username" type="text" ng-model="user.username" ensure-unique required autofocus)
           span.help-block(ng-show="showError(form.username,'unique')") This username is taken.
         .form-group(ng-class="getClass(form.email)")
           label.control-label(for="email") E-mail
-          input.form-control(name="email" type="email" ng-model="user.email" required ensure-unique)
+          input.form-control(name="email" data-object="user" type="email" ng-model="user.email" required ensure-unique)
           span.help-block(ng-show="showError(form.email,'unique')") This email is taken.
         .form-group(ng-class="getClass(form.password)")
           label.control-label(for="password") Password

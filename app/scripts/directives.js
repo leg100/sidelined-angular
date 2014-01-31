@@ -28,22 +28,29 @@ angular.module('sidelinedApp.directives', [])
     return {
       require: 'ngModel',
       link: function postLink(scope, element, attrs, c) {
-        scope.$watch(attrs.ngModel, function(val) {
-          if (!val) {
-            return;
-          }
-          $http({
-            method: 'GET',
-            url: '/api/check-availability',
-            params: {
-              name: attrs.name,
-              value: val
-            }
-          }).success(function() {
-            c.$setValidity('unique', true);
-          }).error(function() {
-            c.$setValidity('unique', false);
-          });
+        var original;
+        c.$formatters.unshift(function(modelValue) {
+          original = modelValue;
+          return modelValue;
+        });
+
+        c.$parsers.push(function(viewValue) {
+          if (viewValue && viewValue !== original) {
+            $http({
+              method: 'GET',
+              url: '/api/check-availability',
+              params: {
+                object: attrs.object,
+                name: attrs.name,
+                value: viewValue
+              }
+            }).success(function() {
+              c.$setValidity('unique', true);
+            }).error(function() {
+              c.$setValidity('unique', false);
+            });
+            return viewValue;
+          };
         });
       }
     };

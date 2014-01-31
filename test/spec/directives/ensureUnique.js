@@ -21,7 +21,7 @@ describe('Directive: ensureUnique', function () {
     };
     element = $compile(
       '<form name="form">' +
-        '<input name="user" type="text" ng-model="model.user" ensure-unique/>' +
+        '<input name="user" data-object="user" type="text" ng-model="model.user" ensure-unique/>' +
       '</form>')(scope);
     scope.$digest();
     form = scope.form;
@@ -30,7 +30,7 @@ describe('Directive: ensureUnique', function () {
   it('should call /api when view changes', inject(function () {
     $httpBackend.expect(
       'GET', 
-      '/api/check-availability?name=user&value=bobby_fives'
+      '/api/check-availability?name=user&object=user&value=bobby_fives'
     ).respond(null);
     form.user.$setViewValue('bobby_fives');
     $httpBackend.flush();
@@ -39,7 +39,7 @@ describe('Directive: ensureUnique', function () {
   it('should set model to valid if response is 200', inject(function () {
     $httpBackend.expect(
       'GET', 
-      '/api/check-availability?name=user&value=bobby_fives'
+      '/api/check-availability?name=user&object=user&value=bobby_fives'
     ).respond(200, '');
     form.user.$setViewValue('bobby_fives');
     $httpBackend.flush();
@@ -49,7 +49,7 @@ describe('Directive: ensureUnique', function () {
   it('should set model to invalid if response not 2xx', inject(function () {
     $httpBackend.expect(
       'GET', 
-      '/api/check-availability?name=user&value=bobby_fives'
+      '/api/check-availability?name=user&object=user&value=bobby_fives'
     ).respond(409, '');
     form.user.$setViewValue('bobby_fives');
     $httpBackend.flush();
