@@ -23,6 +23,10 @@ html.no-js(ng-app='sidelinedApp')
               a(ui-sref="injuries.list({page: 1})") Injuries
             li
               a(ui-sref="players.list({page: 1})") Players
+            li(ng-controller="NavbarPlayerCtrl")
+              form.navbar-form(novalidate name="form")
+                .form-group
+                  input.form-control(id="navbar_player_typeahead" name="player" type="text" ng-model="player" typeahead="player as player.tickerAndName for player in getPlayers($viewValue)" placeholder="Find player" typeahead-on-select="goToPlayerPage()")
           ul.nav.navbar-nav.navbar-right(ng-controller="LoginStatusCtrl")
             li.divider-vertical
             li(ng-show="isAuthenticated()")

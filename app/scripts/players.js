@@ -145,6 +145,24 @@ angular.module('sidelinedApp.players', ['rails', 'sidelinedApp.injuries', 'sidel
         });
     };
   }])  
+  .controller('NavbarPlayerCtrl', ['$scope', 'Player', 'limitToFilter', '$filter', '$state', function($scope, Player, limitToFilter, $filter, $state) {
+    $scope.player = null;
+
+    // populate typeahead
+    $scope.getPlayers = function(substring) {
+      return Player.query(
+        {typeahead: true}
+      ).then(function(resp) {
+        return limitToFilter( $filter('filter')(resp, substring), 8);
+      });
+    };
+
+    $scope.goToPlayerPage = function() {
+      var id = $scope.player.id;
+      $scope.player = null;
+      $state.go('players.show', {id: id });
+    };
+  }])
   .factory('Player', ['railsResourceFactory', 'railsSerializer', function(railsResourceFactory, railsSerializer) {
     var factory = railsResourceFactory({
       url: '/api/players',
