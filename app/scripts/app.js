@@ -33,6 +33,9 @@ angular.module('sidelinedApp', ['sidelinedApp.filters', 'sidelinedApp.directives
         template: '<h1>HTTP500</h1>',
         url: '/error'
       });
-  }]).run(['Session', function(Session) {
+  }]).run(['Session', '$rootScope', '$state', '$stateParams', function(Session, $rootScope, $state, $stateParams) {
     Session.requestCurrentUser();
+
+    $rootScope.$state = $state;
+    $rootScope.$stateParams = $stateParams;
   }]);
