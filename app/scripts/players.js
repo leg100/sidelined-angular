@@ -205,6 +205,8 @@ angular.module('sidelinedApp.players', ['rails', 'sidelinedApp.injuries', 'sidel
       pluralName: 'clubs',
       serializer: railsSerializer(function() {
         this.exclude('revisions');
+        this.exclude('modifier');
+        this.exclude('club');
       }),
       interceptors: [{
         'beforeResponse': function(response) {
