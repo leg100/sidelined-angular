@@ -1,7 +1,8 @@
 .widget
   .sidebar
     h4
-      |&#35;{{player.shortName}}
+      a(ui-sref="players.show({id:player.id})")
+        |&#35;{{player.shortName}}
   .content
     .header
       h4.status

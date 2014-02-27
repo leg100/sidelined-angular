@@ -1,7 +1,8 @@
 .widget
   .sidebar
     h4
-      | {{injury.player.shortName}}
+      a(ui-sref="players.show({id:injury.player.id})")
+        | {{injury.player.shortName}}
     h6
       | {{injury.player.longName}} 
   .content

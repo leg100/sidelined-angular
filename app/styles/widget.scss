@@ -18,6 +18,9 @@ $red: #FF0000;
   }
   
   .sidebar {
+    a {
+      color: white;
+    }
     vertical-align: top;
     @include team-colors;
 
