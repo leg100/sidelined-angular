@@ -3,10 +3,7 @@
 $pink: #FFEBE6;
 $red: #FF0000;
 
-@mixin team-colors {
-  background-color: $red;
-  color: white;
-}
+@import 'team_colors';
 
 .widget {
   margin-bottom: 10px;
@@ -18,11 +15,8 @@ $red: #FF0000;
   }
   
   .sidebar {
-    a {
-      color: white;
-    }
+
     vertical-align: top;
-    @include team-colors;
 
     min-width: 80px;
     width: 15%;

@@ -1,5 +1,5 @@
 .widget
-  .sidebar
+  .sidebar(class="{{player.club.shortName}}")
     h4
       a(ui-sref="players.show({id:player.id})")
         | {{player.shortName}}
@@ -28,7 +28,7 @@
           | Posted by {{player.modifier.username||'unknown'}}      
           a.button.btn.btn-primary.btn-xs.micro-button(ui-sref="players.update({id: player.id})") Update
 .widget(ng-repeat="revision in player.revisions")
-  .sidebar
+  .sidebar(class="{{player.club.shortName}}")
     h4
       | v{{revision.version}}
   .content

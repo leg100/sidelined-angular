@@ -1,5 +1,5 @@
 .widget
-  .sidebar
+  .sidebar(class="{{injury.player.club.shortName}}")
     h4
       a(ui-sref="players.show({id:injury.player.id})")
         | {{injury.player.shortName}}
@@ -44,7 +44,7 @@
           | Posted by {{injury.modifier.username}}      
           a.button.btn.btn-primary.btn-xs.micro-button(ng-href="/injuries/{{injury.id}}/update") Update
 .widget(ng-repeat="revision in injury.revisions")
-  .sidebar
+  .sidebar(class="{{injury.player.club.shortName}}")
     h4
       | v{{revision.version}}
   .content
